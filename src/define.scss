@@ -1,0 +1,56 @@
+$borderColor: #d9d9d9;
+$splitLineColor: #e9e9e9;
+$splitLineColorLight: #f5f5f5;
+$blackTitle: #555555;
+$blackImpDark: #333333;
+$blcakImpLight: #666666;
+$errColor: #ff402c;
+$blcakGrey: #999999;
+$selectBgC: #f5f5f5;
+$grayTable: #fafafa;
+$backgroundColor: #eaebef;
+//主题色
+$primary: #0491FF;
+$primaryBlack: #3B3C3E;
+$primaryHover: #f0a000;
+$primaryLight: rgb(red($primary),green($primary)+61,blue($primary)+183);
+
+//功能色
+$linkColor: #1894ff;
+$upDataColor: #52c41b;
+$downDataColor: #ff6c5c;
+$noDataColor: #999999;
+//其他颜色定义
+$whiteColor:#ffffff;
+$blackColor:#000000;
+$color1: #5E9CFC;
+$color2: #5BC2FE;
+$color3: #8081FC;
+$color4: #39DAE2;
+$color5: #4AD2A2;
+$color6: #8DD96F;
+$color7: #FFB03E;
+$color8: #FF975D;
+$color9: #FF7B7B;
+$color10: #B46EF7;
+$color11: #FC7DCA;
+
+
+//边框圆角
+$border-s:2px;
+$border-m:4px;
+$border-l:8px;
+
+@mixin icon-cust {
+  display: block;
+  width: 100%;
+  text-align: center;
+  line-height: 32px;
+  color: $blackImpDark;
+}
+
+@mixin grid-gap($row, $col) {
+  grid-row-gap: $row;
+  grid-column-gap:$col
+}
+

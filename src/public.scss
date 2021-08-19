@@ -1,0 +1,486 @@
+@import "./define.scss";
+/**
+.disable 禁用状态
+规范:s小 m中 l大
+.border-s//圆角
+.border-topLeft-* // 赏析左右的圆角 s/m/l
+
+icon大小
+.icon-* // 12 14 16 18 24 32 48 64
+icon-main // icon的主色调
+
+.pac-fontSize* //10～20 字体大小
+
+.pac-mt*x //margin 0～28    pac-m*x pac-mt*x pac-ml*x pac-mr*x pac-mb*x
+.pac-pt*x //padding 0～28
+
+.dpB:display: block;
+.dpIB
+.boxSize
+
+.posA: position: absolute;
+.posR:position: relative;
+.fL: flot: left
+.curP 鼠标划过小箭头
+.flexBox:flex
+.flex-1:1
+.flex-row flex-direction: row;
+.flex-col flex-direction: column;
+.flex-middle align-items: center;
+.flex-center justify-content: center;
+.flex-end justify-content: flex-end;
+.taL text-align:left    taR taC
+
+.font-title
+.font-content
+.font-description
+
+//小聂
+.ad-Butn
+.ad-Butn-right
+
+*/
+.disable{
+  pointer-events: none;
+}
+// 不可编辑状态
+.disabled{pointer-events:none;filter:grayscale(100%);opacity:.4;}
+.svg-Primary{
+  fill: $primary
+}
+.click_icon:hover .svg-main{
+  fill: $primary
+}
+.svg-main{
+  fill: $blackTitle
+}
+.border-s {
+  border-radius: $border-s
+}
+
+.border-topLeft-s {
+  border-top-left-radius: $border-s;
+}
+
+.border-topRight-s {
+  border-top-right-radius: $border-s;
+}
+
+.border-bottomLeft-s {
+  border-bottom-left-radius: $border-s;
+}
+
+.border-bottomRight-s {
+  border-bottom-Right-radius: $border-s;
+}
+
+.border-m {
+  border-radius: $border-m
+}
+
+.border-topLeft-m {
+  border-top-left-radius: $border-m;
+}
+
+.border-topRight-m {
+  border-top-right-radius: $border-m;
+}
+
+.border-bottomLeft-m {
+  border-bottom-left-radius: $border-m;
+}
+
+.border-bottomRight-m {
+  border-bottom-right-radius: $border-m;
+}
+
+.border-l {
+  border-radius: $border-l
+}
+
+.border-topLeft-l {
+  border-top-left-radius: $border-l;
+}
+
+.border-topRight-l {
+  border-top-right-radius: $border-l;
+}
+
+.border-bottomLeft-l {
+  border-bottom-left-radius: $border-l;
+}
+
+.border-bottomRight-l {
+  border-bottom-right-radius: $border-l;
+}
+
+//icon大小
+.icon-12 {
+  width: 12px;
+  height: 12px;
+}
+
+.icon-14 {
+  width: 14px;
+  height: 14px;
+}
+
+.icon-16 {
+  width: 16px;
+  height: 16px;
+}
+
+.icon-18 {
+  width: 18px;
+  height: 18px;
+}
+.icon-20 {
+  width: 20px;
+  height: 20px;
+}
+.icon-24 {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-32 {
+  width: 32px;
+  height: 32px;
+}
+
+.icon-48 {
+  width: 48px;
+  height: 48px;
+}
+
+.icon-64 {
+  width: 64px;
+  height: 64px;
+}
+
+.icon-main{
+  fill:$blackTitle
+}
+//font
+.font-title {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+}
+
+.font-content {
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.font-description {
+  font-size: 10px;
+  line-height: 18px;
+}
+
+@for $i from 10 through 20 {
+  .pac-fontSize#{$i} {
+    font-size: 1px * $i;
+  }
+}
+
+@for $i from 0 through 28 {
+  .pac-mt#{$i}x {
+    margin-top: 1px * $i;
+  }
+
+  .pac-ml#{$i}x {
+    margin-left: 1px * $i;
+  }
+
+  .pac-mr#{$i}x {
+    margin-right: 1px * $i;
+  }
+
+  .pac-mb#{$i}x {
+    margin-bottom: 1px * $i;
+  }
+
+  .pac-m#{$i}x {
+    margin: 1px * $i;
+  }
+
+  .pac-pt#{$i}x {
+    padding-top: 1px * $i;
+  }
+
+  .pac-pl#{$i}x {
+    padding-left: 1px * $i;
+  }
+
+  .pac-pr#{$i}x {
+    padding-right: 1px * $i;
+  }
+
+  .pac-pb#{$i}x {
+    padding-bottom: 1px * $i;
+  }
+
+  .pac-p#{$i}x {
+    padding: 1px * $i;
+  }
+}
+//flex
+.flexBox{
+  display: flex;
+}
+.flex-1{
+  flex:1
+}
+.flex-row{
+  flex-direction: row;
+}
+.flex-col{
+  flex-direction: column;
+}
+.flex-middle{
+  align-items: center;
+}
+.flex-center{
+  justify-content: center;
+}
+.flex-space-between {
+  justify-content: space-between;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-end{
+  justify-content: flex-end;
+}
+.gridBox{
+  display: grid;
+}
+.gridAuto{
+  grid-template-columns:repeat(auto-fill, 450px)
+}
+
+
+.dpB{
+  display: block;
+}
+.dbIB{
+  display: inline-block;
+}
+.boxSize{
+  box-sizing: border-box;
+}
+.posA{
+  position: absolute;
+}
+.posR{
+  position: relative;
+}
+.fL{
+  float: left;
+}
+.fR{
+  float: right;
+}
+.curP{
+  &:hover{
+    cursor: pointer;
+  }
+}
+.taL{
+  text-align: left;
+}
+.taC{
+  text-align: center;
+}
+.taR{
+  text-align: right;
+}
+.w100pct{
+  width: 100%;
+}
+// 特殊节点的颜色
+.bg-grey{
+  background-color: $grayTable;
+}
+
+.text-overflow{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pac-container{
+  width: 100%;
+  border-radius: $border-m;
+  background-color: $whiteColor;
+  box-sizing: border-box;
+}
+.pac-container-full{
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+@keyframes antZoomBigIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes antZoomBigOut {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+.svg-icon12 {
+  width: 12px;
+  height: 12px;
+}
+.svg-icon13 {
+  width: 13px;
+  height: 13px;
+}
+.svg-icon14 {
+  width: 14px;
+  height: 14px;
+}
+.svg-icon20 {
+  width: 20px;
+  height: 20px;
+}
+.svg-icon21 {
+  width: 21px;
+  height: 21px;
+}
+//分页器前面的文字
+.pageForPagination{
+  color: $blackImpDark;
+  font-weight: normal;
+  padding-left: 8px;
+}
+
+// Advertising 公共样式类
+.ad-Butn {
+  height: 32px;
+  background: #ffffff;
+  fill: rgb(85, 85, 85);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  i {
+    margin-right: 4px;
+  }
+}
+
+.ad-Butn-right {
+  padding: 0;
+  font-size: 12px;
+  color: #707070;
+  margin-right: 17px;
+  text-align: center;
+  padding-top: 4px;
+
+  svg {
+    cursor: pointer;
+  }
+}
+// 圆圈图标按钮
+.btn-round-svg{
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  fill: $blackTitle;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover{
+    background: $primary;
+    fill:#fff;
+    cursor: pointer;
+  }
+}
+
+
+@mixin percentP {
+  
+  .fieldSelect {
+    width: 12px;
+    .fieldNum{
+      display: block;
+      div{
+        cursor: pointer;
+      }
+    }
+    .fieldPercent{display: none}
+  }
+}
+.inputCust{
+  .fieldSelect{
+    width: 12px;
+    .fieldNum{display: none}
+    .fieldPercent{display: block}
+  }
+  &:hover {
+    @include percentP;
+
+  }
+  &>input:focus ~ .el-input-group__append{
+    @include percentP;
+  }
+  
+}
+
+@mixin scrollerStyle () {
+  &::-webkit-scrollbar {
+    width:8px;background: #EAEAEA;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-thumb{
+    background:#c1c1c1;border-radius: 4px;
+  }
+  &::-webkit-scrollbar-thumb:hover{
+    background:#999999;border-radius: 4px;
+  }
+}
+
+.pacvue-scroller{
+  @include scrollerStyle
+}
+
+
+.h347x {
+  height: 347px;
+}
+
+.p24t0x {
+  padding: 24px;
+  padding-top: 0;
+}
+.p24b0x {
+  padding: 24px;
+  padding-bottom: 0;
+}
+.pl0x {
+  padding: 24px;
+  padding-left: 0;
+}
+.pr0x {
+  padding: 24px;
+  padding-right: 0;
+}
+
+.fs14x {
+  font-size: 14px;
+}
