@@ -12,7 +12,11 @@ const publicConfig = {
       alias: {
         '@': path.join(__dirname, 'src')
       }
-    }
+    },
+    plugins: [
+      new webpack.ProvidePlugin({
+      })
+    ]
   },
 
   css: {
@@ -28,12 +32,6 @@ const publicConfig = {
     }
   },
   chainWebpack: (config) => {
-  },
-  configureWebpack: {
-    plugins: [
-      new webpack.ProvidePlugin({
-      })
-    ]
   }
 }
 const develop = {
@@ -44,11 +42,17 @@ const develop = {
       warnings: false
     },
     proxy: {
-      '/mock-s': {
-        target: 'http://rap2api.taobao.org/app/mock/84900',
-        pathRewrite: {
-          '^/mock-s': ''
-        }
+      '/sys': {
+        target: 'http://192.168.31.107:8880/'
+      },
+      '/common': {
+        target: 'http://192.168.31.107:8880/'
+      },
+      '/real': {
+        target: 'http://192.168.31.107:8880/'
+      },
+      history: {
+        target: 'http://192.168.31.107:8880/'
       }
     }
   },

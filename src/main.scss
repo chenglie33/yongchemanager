@@ -12,3 +12,38 @@ html,body,div,ul,li,h1,h2,h3,h4,h5,h6,p,dl,dt,dd,ol,form,input,textarea,th,td,se
   padding: 30px 23px;
   box-sizing: border-box;
 }
+.inputlogon{
+  width: 546px;
+  height: 52px;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  position: relative;
+ 
+  
+   input{
+    height: 52px !important;
+    border-radius: 52px;
+    background-color: rgba(241, 248, 253, 1);
+    padding-left: 60px !important;
+   
+   }
+    .el-input__prefix{
+      // padding-left: 40px;
+      left: 20px;
+      top: 3px;
+    }
+  .el-input__icon{
+    font-size: 16px !important;
+    color: rgba(153, 153, 153, 1);
+  }
+  input::-webkit-input-placeholder {
+    color: rgba(153, 153, 153, 1);
+  }
+  input::-moz-input-placeholder {
+    color: rgba(153, 153, 153, 1);
+  }
+  input::-ms-input-placeholder {
+    color: rgba(153, 153, 153, 1);
+  }
+  
+}

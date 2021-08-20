@@ -5,7 +5,15 @@
   </div>
 </template>
 <script>
+import { getUserInfoApi } from '@/api/apilist'
 export default {
+  mounted () {
+    getUserInfoApi().then(data => {
+      this.$store.commit('SET_USERINFO', data.content)
+    }).catch(() => {
+      this.$router.replace({ path: '/login/current' })
+    })
+  }
 
 }
 </script>

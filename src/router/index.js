@@ -6,19 +6,33 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '@/views/login/login.vue')
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Frame,
-
+    redirect: '/home/current',
     children: [
       {
-        path: '/',
+        path: 'current',
         name: 'Homes',
         activeMenu: 'Home',
         meta: {
           activeMenu: 'Home'
         },
-        component: () => import(/* webpackChunkName: "OrderManage" */ '@/views/Home.vue')
+        component: () => import('@/views/Home.vue')
+      },
+      {
+        path: 'his',
+        name: 'his',
+        activeMenu: 'his',
+        meta: {
+          activeMenu: 'his'
+        },
+        component: () => import('@/views/histroy/histroys.vue')
       }
     ]
   },
