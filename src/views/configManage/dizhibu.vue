@@ -1,10 +1,15 @@
 <template>
   <div class="container-panel">
-    <AddUser ref='AddUser' @success='search' :comapyTypeList='comapyTypeList'/>
     <div class="flexBox flex-row flex-end">
-      <el-select v-model="req.companyId" clearable placeholder="公司" class="pac-pr20x">
+      <el-input
+        v-model="req.airpointName"
+        placeholder="站点名称"
+        class="pac-pr20x"
+        style="width:340px"
+      ></el-input>
+      <el-select v-model="req.stationType" clearable placeholder="站点类型" class="pac-pr20x">
         <el-option
-          v-for="item in comapyTypeList"
+          v-for="item in statinlist"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -12,26 +17,20 @@
           {{ item.label }}
         </el-option>
       </el-select>
-      <el-input
-        v-model="req.userName"
-        placeholder="用户名"
-        class="pac-pr20x"
-        style="width:340px"
-      ></el-input>
       <el-button type="primary" class='pac-mr12x' @click='search'>查询</el-button>
       <el-button type="primary" @click='add'>添加</el-button>
     </div>
     <div>
       <el-table :data="tableData" border style="width: 100%" class="pac-mt20x">
-        <el-table-column fixed prop="userName" label="用户名" width="150">
+        <el-table-column fixed prop="airportName" label="站点名称" width="150">
         </el-table-column>
-        <el-table-column prop="companyName" label="公司" >
+        <el-table-column prop="areaCode" label="区县" >
         </el-table-column>
-        <el-table-column prop="phoneNum" label="电话" >
+        <el-table-column prop="areaName" label="区县名称" >
         </el-table-column>
-        <el-table-column prop="userType" label="角色" >
+        <el-table-column prop="stationType" label="站点类型" >
           <template slot-scope="scope">
-            <div>{{getTypeText('userType', scope.row.userType)}}</div>
+            <div>{{getTypeText('stationType', scope.row.stationType)}}</div>
           </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
@@ -59,12 +58,12 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { getSysUserPageListApi, delSysUserApi } from '@/api/apilist'
-import AddUser from './components/AddUser.vue'
+import { getAddressBookPageListApi } from '@/api/apilist'
+
 import { getTypeText } from '@/utils/lib'
 export default {
-  name: 'personmanage',
-  components: { AddUser },
+  name: 'dizhibu',
+  components: { },
   computed: {
 
     CommonCompanylist () {
@@ -81,15 +80,12 @@ export default {
         pageNo: 1,
         pageSize: 50,
         companyId: null,
-        userName: ''
+        airpointName: '',
+        stationType: null
 
       },
       total: 0,
-      currentPage: 1,
-      input: '',
-      value1: null,
-      value: null,
-      options: [],
+      statinlist: getTypeText('stationType'),
       tableData: [],
       comapyTypeList: []
     }
@@ -113,7 +109,7 @@ export default {
       this.getList()
     },
     getList () {
-      getSysUserPageListApi(this.req).then(data => {
+      getAddressBookPageListApi(this.req).then(data => {
         this.tableData = data.content.list
         this.total = Number(data.content.pageInfo.rows)
       })
@@ -127,9 +123,9 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        delSysUserApi({ id: data.id }).then(() => {
-          this.search()
-        })
+        // delSysUserApi({ id: data.id }).then(() => {
+        //   this.search()
+        // })
       }).catch(() => {
 
       })

@@ -142,6 +142,13 @@ export default {
   },
   mounted () {
     this.getcartype()
+    console.log(this.$route.params.data)
+    if (this.$route.params.data) {
+      // this.selectIds.push(this.$route.params.data.id)
+      // this.selectCarArr.push(this.$route.params.data)
+      this.$emit('selectChangef', this.$route.params.data)
+    }
+    // this.selectIds.push()
   }
 }
 </script>
@@ -181,6 +188,7 @@ export default {
   box-shadow: 0px 0px 10px 0px rgba(7, 24, 39, 0.15);
   margin-left: 16px;
   box-sizing: border-box;
+  overflow: auto;
   .childPanel{
     width: 100%;
     box-sizing: border-box;

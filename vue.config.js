@@ -8,15 +8,17 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 const publicConfig = {
   configureWebpack: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        dayjs: 'dayjs'
+      })
+      // new BundleAnalyzerPlugin({analyzerPort: 8889})
+    ],
     resolve: {
       alias: {
         '@': path.join(__dirname, 'src')
       }
-    },
-    plugins: [
-      new webpack.ProvidePlugin({
-      })
-    ]
+    }
   },
 
   css: {
@@ -42,18 +44,22 @@ const develop = {
       warnings: false
     },
     proxy: {
-      '/sys': {
-        target: 'http://192.168.31.107:8880/'
-      },
-      '/common': {
-        target: 'http://192.168.31.107:8880/'
-      },
-      '/real': {
-        target: 'http://192.168.31.107:8880/'
-      },
-      history: {
-        target: 'http://192.168.31.107:8880/'
+      '/ht-api': {
+        target: 'http://192.168.31.107:8881/'
+        // pathRewrite: {
+        //   '^/ht-api': ''
+        // }
       }
+      // '/common': {
+      //   target: 'http://192.168.31.107:8880/'
+      // },
+      // '/real': {
+      //   target: 'http://192.168.31.107:8880/'
+      // },
+      // history: {
+      //   target: 'http://192.168.31.107:8880/'
+      // }
+
     }
   },
   lintOnSave: false,

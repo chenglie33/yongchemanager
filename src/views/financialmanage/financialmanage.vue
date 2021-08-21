@@ -1,9 +1,21 @@
 <template>
   <div class="container-panel">
+    <KaiPiaoDi ref='KaiPiaoDi' @success='search'/>
     <div class="flexBox flex-row flex-end">
-      <el-select v-model="value" placeholder="订单状态" class="pac-pr20x">
+      <el-date-picker
+      class='pac-mr12x'
+        v-model="rangedata"
+        type="datetimerange"
+        value-format='yyyy-MM-dd HH:mm:SS'
+        range-separator="至"
+        start-placeholder="开始日期"
+        end-placeholder="结束日期">
+      </el-date-picker>
+      <el-input class='w120x pac-mr12x' v-model="req.orderId" placeholder="订单号"/>
+
+      <el-select v-model="req.orderStatus" placeholder="订单状态" clearable class="pac-pr20x">
         <el-option
-          v-for="item in options"
+          v-for="item in orderStatuslist"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -11,127 +23,131 @@
           {{ item.label }}
         </el-option>
       </el-select>
-      <el-date-picker
-        class="pac-pr20x"
-        clearable
-        v-model="value1"
-        type="date"
-        placeholder="选择日期"
-      >
-      </el-date-picker>
-      <el-input
-        v-model="input"
-        placeholder="输入订单编号/驾驶员/关键字"
-        class="pac-pr20x"
-        style="width:340px"
-      ></el-input>
-      <el-button type="primary">查询</el-button>
+      <el-button type="primary"  @click='search'>查询</el-button>
     </div>
     <div>
       <el-table :data="tableData" border style="width: 100%" class="pac-mt20x">
-        <el-table-column fixed prop="date" label="日期" width="150">
+        <el-table-column fixed prop="id" label="订单编号" > </el-table-column>
+         <el-table-column prop="orderStatus" label="订单状态" >
+           <template slot-scope="scope">
+             <div>
+               {{getTypeText('orderStatus', scope.row.orderStatus)}}
+             </div>
+           </template>
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="120">
-        </el-table-column>
-        <el-table-column prop="province" label="省份" width="120">
-        </el-table-column>
-        <el-table-column prop="city" label="市区" width="120">
-        </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
-        <el-table-column prop="zip" label="邮编" width="120"> </el-table-column>
-        <el-table-column fixed="right" label="操作" width="100">
+        <el-table-column prop="deposit" label="定金（元）"> </el-table-column>
+        <el-table-column prop="otherCost" label="待付"> </el-table-column>
+
+        <el-table-column fixed="right" label="操作" width="200">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small"
-              >查看</el-button
+            <el-button v-if='scope.row.orderStatus!==7'
+            @click='showd(scope.row)'
+              type="text"
+              >开票</el-button
             >
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button v-else
+              type="text"
+              @click='showd(scope.row)'
+              >已开票</el-button
+            >
+
           </template>
         </el-table-column>
       </el-table>
     </div>
     <div class="flexBox flex-end pac-mt12x">
       <el-pagination
+      background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
         :page-size="100"
         layout="prev, pager, next, jumper"
-        :total="1000"
+        :total="total"
       >
       </el-pagination>
     </div>
   </div>
 </template>
 <script>
+import { getInvoiceOrderPageListApi } from '@/api/apilist'
+import { getTypeText } from '@/utils/lib'
+import { mapState } from 'vuex'
+import KaiPiaoDi from './components/KaiPiaoDi.vue'
+
 export default {
-  name: 'financialmanage',
+  name: 'finalcia',
+  components: {
+    KaiPiaoDi
+  },
+  computed: {
+
+    CommonCompanylist () {
+      this.getComp()
+      return this.CommonCompany
+    },
+    ...mapState([
+      'CommonCompany', 'CommonDriver', 'CommonOrder'
+    ])
+  },
   data () {
+    const datec = new Date()
+    datec.setHours(0)
+    datec.setMinutes(0)
+    datec.setSeconds(0)
     return {
       currentPage: 1,
-      input: '',
-      value1: null,
-      value: null,
-      options: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        },
-        {
-          value: '选项2',
-          label: '双皮奶'
-        },
-        {
-          value: '选项3',
-          label: '蚵仔煎'
-        },
-        {
-          value: '选项4',
-          label: '龙须面'
-        },
-        {
-          value: '选项5',
-          label: '北京烤鸭'
-        }
-      ],
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1517 弄',
-          zip: 200333
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1519 弄',
-          zip: 200333
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1516 弄',
-          zip: 200333
-        }
-      ]
+      comapyTypeList: [],
+      total: 0,
+      req: {
+        pageNo: 1,
+        pageSize: 50,
+        orderId: '',
+        orderStatus: '',
+        rangedata: [dayjs(datec).format('YYYY-MM-DD HH:mm:ss'), dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')]
+      },
+      orderStatuslist: getTypeText('orderStatus'),
+      tableData: [],
+      rangedata: [dayjs(datec).format('YYYY-MM-DD HH:mm:ss'), dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')]
     }
   },
   methods: {
+    getTypeText,
+    showd (data) {
+      this.$refs.KaiPiaoDi.show(data)
+    },
+    getComp () {
+      const comapyTypeList = []
+      this.CommonCompany.forEach(item => {
+        comapyTypeList.push({ value: item.id, label: item.companyName })
+      })
+      this.comapyTypeList = comapyTypeList
+    },
     handleSizeChange () {},
-    handleCurrentChange () {}
+    handleCurrentChange (v) {
+      this.req.pageNo = v
+      this.getList()
+    },
+    search () {
+      this.req.pageNo = 1
+      this.getList()
+    },
+    getList () {
+      this.req.startTime = this.rangedata[0]
+      this.req.endTime = this.rangedata[1]
+      this.req.orderStatus = this.req.orderStatus === '' ? null : this.orderStatus
+      getInvoiceOrderPageListApi(this.req).then(data => {
+        console.log(data)
+        this.tableData = data.content.list
+        this.total = Number(data.content.pageInfo.rows)
+      })
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.getComp()
+      this.getList()
+    }, 10)
   }
 }
 </script>

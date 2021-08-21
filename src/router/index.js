@@ -100,6 +100,22 @@ const routes = [
           activeMenu: 'personmanage'
         },
         component: () => import(/* webpackChunkName: "PersonManage" */ '@/views/personManage/PersonManage.vue')
+      },
+      {
+        path: '/personmanage/driver',
+        name: 'driver',
+        meta: {
+          activeMenu: 'driver'
+        },
+        component: () => import(/* webpackChunkName: "driver" */ '@/views/personManage/DriverManage.vue')
+      },
+      {
+        path: '/personmanage/weixin',
+        name: 'weixin',
+        meta: {
+          activeMenu: 'weixin'
+        },
+        component: () => import(/* webpackChunkName: "WeixinManager" */ '@/views/personManage/WeixinManage.vue')
       }
     ]
   },
@@ -116,8 +132,27 @@ const routes = [
           activeMenu: 'configmanage'
         },
         component: () => import(/* webpackChunkName: "configManage" */ '@/views/configManage/configManage.vue')
+      }, {
+        path: '/configmanage/dizhibu',
+        name: 'dizhibu',
+        meta: {
+          activeMenu: 'dizhibu'
+        },
+        component: () => import(/* webpackChunkName: "dizhibu" */ '@/views/configManage/dizhibu.vue')
+      },
+      {
+        path: '/configmanage/feiyong',
+        name: 'feiyong',
+        meta: {
+          activeMenu: 'feiyong'
+        },
+        component: () => import(/* webpackChunkName: "feiyong" */ '@/views/configManage/feiyong.vue')
       }
     ]
+  },
+  {
+    path: '*',
+    redirect: '/home/current'
   }
 
 ]

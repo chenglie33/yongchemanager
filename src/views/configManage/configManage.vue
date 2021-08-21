@@ -1,50 +1,40 @@
 <template>
   <div class="container-panel">
     <div class="flexBox flex-row flex-end">
-      <el-select v-model="value" placeholder="订单状态" class="pac-pr20x">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-          {{ item.label }}
-        </el-option>
-      </el-select>
-      <el-date-picker
-        class="pac-pr20x"
-        clearable
-        v-model="value1"
-        type="date"
-        placeholder="选择日期"
-      >
-      </el-date-picker>
       <el-input
-        v-model="input"
-        placeholder="输入订单编号/驾驶员/关键字"
+        v-model="req.areaCode"
+        placeholder="区县代码"
         class="pac-pr20x"
         style="width:340px"
       ></el-input>
-      <el-button type="primary">查询</el-button>
+      <el-input
+        v-model="req.areaName"
+        placeholder="区县名称"
+        class="pac-pr20x"
+        style="width:340px"
+      ></el-input>
+      <el-button type="primary" class='pac-mr12x' @click='search'>查询</el-button>
+      <el-button type="primary" @click='add'>添加</el-button>
     </div>
     <div>
       <el-table :data="tableData" border style="width: 100%" class="pac-mt20x">
-        <el-table-column fixed prop="date" label="日期" width="150">
+        <el-table-column fixed prop="areaCode" label="区县代码" width="150">
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="120">
+        <el-table-column prop="areaName" label="区县名称" >
         </el-table-column>
-        <el-table-column prop="province" label="省份" width="120">
+        <el-table-column prop="parentCode" label="父级编码" >
         </el-table-column>
-        <el-table-column prop="city" label="市区" width="120">
+        <el-table-column prop="type" label="类型" >
+          <template slot-scope="scope">
+            <div>{{getTypeText('qutype', scope.row.type)}}</div>
+          </template>
         </el-table-column>
-        <el-table-column prop="address" label="地址"> </el-table-column>
-        <el-table-column prop="zip" label="邮编" width="120"> </el-table-column>
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small"
-              >查看</el-button
+              >编辑</el-button
             >
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button type="text" size="small" @click='deletd(scope.row)'>删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -53,85 +43,98 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page.sync="currentPage"
-        :page-size="100"
+        :current-page.sync="req.pageNo"
+        :page-size="req.pageSize"
         layout="prev, pager, next, jumper"
-        :total="1000"
+        :total="total"
       >
       </el-pagination>
     </div>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
+import { getRegionPageListApi } from '@/api/apilist'
+
+import { getTypeText } from '@/utils/lib'
 export default {
-  name: 'configmanage',
+  name: 'personmanage',
+  components: { },
+  computed: {
+
+    CommonCompanylist () {
+      this.getComp()
+      return this.CommonCompany
+    },
+    ...mapState([
+      'CommonCompany', 'CommonDriver', 'CommonOrder'
+    ])
+  },
   data () {
     return {
+      req: {
+        pageNo: 1,
+        pageSize: 50,
+        companyId: null,
+        userName: ''
+
+      },
+      total: 0,
       currentPage: 1,
       input: '',
       value1: null,
       value: null,
-      options: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        },
-        {
-          value: '选项2',
-          label: '双皮奶'
-        },
-        {
-          value: '选项3',
-          label: '蚵仔煎'
-        },
-        {
-          value: '选项4',
-          label: '龙须面'
-        },
-        {
-          value: '选项5',
-          label: '北京烤鸭'
-        }
-      ],
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1518 弄',
-          zip: 200333
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1517 弄',
-          zip: 200333
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1519 弄',
-          zip: 200333
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-          city: '普陀区',
-          address: '上海市普陀区金沙江路 1516 弄',
-          zip: 200333
-        }
-      ]
+      options: [],
+      tableData: [],
+      comapyTypeList: []
     }
   },
   methods: {
+    getTypeText,
+    getComp () {
+      const comapyTypeList = []
+      this.CommonCompany.forEach(item => {
+        comapyTypeList.push({ value: item.id, label: item.companyName })
+      })
+      this.comapyTypeList = comapyTypeList
+    },
     handleSizeChange () {},
-    handleCurrentChange () {}
+    handleCurrentChange (v) {
+      this.req.pageNo = v
+      this.getList()
+    },
+    search () {
+      this.req.pageNo = 1
+      this.getList()
+    },
+    getList () {
+      getRegionPageListApi(this.req).then(data => {
+        this.tableData = data.content.list
+        this.total = Number(data.content.pageInfo.rows)
+      })
+    },
+    handleClick (data) {
+      this.$refs.AddUser.show('编辑', data)
+    },
+    deletd (data) {
+      this.$confirm('是否删除该数据?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // delSysUserApi({ id: data.id }).then(() => {
+        //   this.search()
+        // })
+      }).catch(() => {
+
+      })
+    },
+    add () {
+      this.$refs.AddUser.show('添加')
+    }
+  },
+  mounted () {
+    this.getList()
   }
 }
 </script>

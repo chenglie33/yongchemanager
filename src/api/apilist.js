@@ -1,27 +1,27 @@
 import { request } from '@/utils/request'
 export function loginApi (data) {
   return request({
-    url: '/sys/loginPc',
+    url: '/ht-api/sys/loginPc',
     method: 'post',
     data
   })
 }
 export function loginoutApi () {
   return request({
-    url: '/sys/logoutPc',
+    url: '/ht-api/sys/logoutPc',
     method: 'get'
   })
 }
 export function getUserInfoApi () {
   return request({
-    url: '/sys/getUserInfo',
+    url: '/ht-api/sys/getUserInfo',
     method: 'get'
   })
 }
 
 export function getCarHistoryApi (data) {
   return request({
-    url: '/history/getCarHistory',
+    url: '/ht-api/history/getCarHistory',
     method: 'post',
     data
   })
@@ -29,14 +29,14 @@ export function getCarHistoryApi (data) {
 
 export function getCarTypeApi () {
   return request({
-    url: '/common/getCarType',
+    url: '/ht-api/common/getCarType',
     method: 'get'
   })
 }
 
 export function getCarListApi (data) {
   return request({
-    url: '/common/getCarList',
+    url: '/ht-api/common/getCarList',
     method: 'post',
     data
   })
@@ -44,7 +44,166 @@ export function getCarListApi (data) {
 
 export function carRealDetailsApi (data) {
   return request({
-    url: '/real/carRealDetails',
+    url: '/ht-api/real/carRealDetails',
+    method: 'post',
+    data
+  })
+}
+export function getCarInfoPageListApi (data) {
+  return request({
+    url: '/ht-api/car/getCarInfoPageList',
+    method: 'post',
+    data
+  })
+}
+
+export function getCompanyListApi () {
+  return request({
+    url: '/ht-api/common/getCompanyList',
+    method: 'get'
+  })
+}
+export function getDriverListApi () {
+  return request({
+    url: '/ht-api/common/getDriverList',
+    method: 'post'
+  })
+}
+export function getOrderStatusApi () {
+  return request({
+    url: '/ht-api/common/getOrderStatus',
+    method: 'get'
+  })
+}
+
+export function getOrderPageListApi (data) {
+  return request({
+    url: '/ht-api/order/getOrderPageList',
+    method: 'post',
+    data
+  })
+}
+export function delCarInfoApi (data) {
+  return request({
+    url: 'ht-api/car/delCarInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function addCarInfoApi (data) {
+  return request({
+    url: 'ht-api/car/addCarInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function updateCarInfoApi (data) {
+  return request({
+    url: '/ht-api/car/updateCarInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function getInvoiceOrderPageListApi (data) {
+  return request({
+    url: '/ht-api/order/getInvoiceOrderPageList',
+    method: 'post',
+    data
+  })
+}
+
+export function getInvoiceInfoApi (data) {
+  return request({
+    url: '/ht-api/order/getInvoiceInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function releaseOrderApi (data) {
+  return request({
+    url: '/ht-api/order/releaseOrder',
+    method: 'post',
+    data
+  })
+}
+export function orderInvoicApi (data) {
+  return request({
+    url: '/ht-api/order/orderInvoice',
+    method: 'post',
+    data
+  })
+}
+
+export function getSysUserPageListApi (data) {
+  return request({
+    url: '/ht-api/sys/getSysUserPageList',
+    method: 'post',
+    data
+  })
+}
+
+export function addSysUserApi (data) {
+  return request({
+    url: '/ht-api/sys/addSysUser',
+    method: 'post',
+    data
+  })
+}
+
+export function updateSysUserApi (data) {
+  return request({
+    url: '/ht-api/sys/updateSysUser',
+    method: 'post',
+    data
+  })
+}
+export function delSysUserApi (data) {
+  return request({
+    url: '/ht-api/sys/delSysUser',
+    method: 'post',
+    data
+  })
+}
+
+export function getDriverInfoPageListApi (data) {
+  return request({
+    url: '/ht-api/driver/getDriverInfoPageList',
+    method: 'post',
+    data
+  })
+}
+
+export function getWxUserPageListApi (data) {
+  return request({
+    url: '/ht-api/wxUser/getWxUserPageList',
+    method: 'post',
+    data
+  })
+}
+
+export function getRegionPageListApi (data) {
+  return request({
+    url: '/ht-api/config/getRegionPageList',
+    method: 'post',
+    data
+  })
+}
+
+export function getAddressBookPageListApi (data) {
+  return request({
+    url: '/ht-api/config/getAddressBookPageList',
+    method: 'post',
+    data
+  })
+}
+
+export function getCostConfigurePageListApi (data) {
+  return request({
+    url: '/ht-api/config/getCostConfigurePageList',
     method: 'post',
     data
   })

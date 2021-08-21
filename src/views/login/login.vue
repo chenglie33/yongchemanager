@@ -23,7 +23,8 @@
   </div>
 </template>
 <script>
-import { loginApi } from '@/api/apilist'
+import { loginApi, getUserInfoApi } from '@/api/apilist'
+import { getCommonData } from '@/utils/lib'
 export default {
   name: 'login',
   data () {
@@ -41,7 +42,11 @@ export default {
         password: this.password
       }).then(data => {
         if (data.msg === 'OK') {
-          this.$router.push({ path: '/home' })
+          getUserInfoApi().then((data) => {
+            this.$store.commit('SET_USERINFO', {})
+            this.$router.push({ path: '/home' })
+            getCommonData()
+          })
         }
       })
     }

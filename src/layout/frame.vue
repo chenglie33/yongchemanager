@@ -25,13 +25,23 @@
           <img class='imgmenu' src='@/assets/clgl.png'/>
           车辆管理
         </div>
-        <div class='menuItem flexBox flex-col flex-middle flex-center' :class='{active:$route.meta.activeMenu==="personmanage"}' @click="$router.push('/personmanage')">
-          <img class='imgmenu' src='@/assets/rygl.png'/>
+        <div class='menuItem flexBox flex-col flex-middle flex-center' :class='{active:$route.meta.activeMenu==="personmanage"}' >
+          <img class='imgmenu' src='@/assets/rygl.png' @click.stop="$router.push('/personmanage')"/>
           人员管理
+            <div class='dropDownPanel posA flexBox flex-col'>
+            <div class='panel-item' @click="$router.push('/personmanage')">系统用户</div>
+            <div class='panel-item' @click="$router.push('/personmanage/driver')">司机</div>
+            <div class='panel-item' @click="$router.push('/personmanage/weixin')">微信用户</div>
+          </div>
         </div>
-        <div class='menuItem flexBox flex-col flex-middle flex-center' :class='{active:$route.meta.activeMenu==="configmanage"}' @click="$router.push('/configmanage')">
-          <img class='imgmenu' src='@/assets/pzgl.png'/>
+        <div class='menuItem flexBox flex-col flex-middle flex-center' :class='{active:$route.meta.activeMenu==="configmanage"}' >
+          <img class='imgmenu' src='@/assets/pzgl.png' @click="$router.push('/configmanage')"/>
           配置管理
+<div class='dropDownPanel posA flexBox flex-col'>
+            <div class='panel-item' @click="$router.push('/configmanage')">行政区</div>
+            <div class='panel-item' @click="$router.push('/configmanage/dizhibu')">地址簿</div>
+            <div class='panel-item' @click="$router.push('/configmanage/feiyong')">费用</div>
+          </div>
         </div>
         <div class='menuItem flexBox flex-col flex-middle flex-center'>
           <img class='imgmenu' src='@/assets/tjfx.png'/>
@@ -59,10 +69,7 @@ export default {
         type: 'warning'
       }).then(() => {
         loginoutApi().then(() => {
-          getUserInfoApi().then((data) => {
-            this.$store.commit('SET_USERINFO', data.content)
-            this.$router.push({ path: '/login' })
-          })
+          this.$router.push({ path: '/login' })
         })
       }).catch(() => {
 
@@ -112,11 +119,11 @@ export default {
 
   }
   .dropDownPanel{
-    top: 90px;
+    top: 88px;
     background: RGBA(4, 145, 255, 1);
     border-radius: 2px;
     display: none;
-    z-index: 30;
+    z-index: 40;
     .panel-item{
       width: 150px;
       height: 40px;
