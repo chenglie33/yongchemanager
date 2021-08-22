@@ -10,23 +10,29 @@
       <div class="flexBox flex-col">
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">用户名：</div>
-            <div><el-input v-model='req.userName'/></div>
+            <div class="labelItem">区县：</div>
+            <div><el-input v-model='req.areaName'/></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">登录账号：</div>
+            <div class="labelItem">区县编码：</div>
             <div>
-              <el-input v-model='req.loginNumber'/>
+              <el-input v-model='req.areaCode'/>
             </div>
           </div>
         </div>
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">公司：</div>
+            <div class="labelItem">父级编码：</div>
             <div>
-              <el-select v-model="req.companyId" clearable placeholder="公司">
+              <el-input v-model='req.parentCode'/>
+            </div>
+          </div>
+          <div class="flex-1 flexBox flex-row flex-middle">
+            <div class="labelItem">类型：</div>
+            <div>
+              <el-select v-model="req.type" clearable placeholder="类型">
                 <el-option
-                  v-for="item in comapyTypeList"
+                  v-for="item in typeList"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -36,38 +42,12 @@
               </el-select>
             </div>
           </div>
-          <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">电话：</div>
-            <div>
-              <el-input v-model='req.phoneNum'/>
-            </div>
-          </div>
         </div>
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">密码：</div>
-            <div><el-input v-model='req.password'/></div>
+            <div class="labelItem">排序：</div>
+            <div><el-input v-model='req.sort'/></div>
           </div>
-          <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">角色：</div>
-            <div><el-select v-model="req.userType" clearable placeholder="角色">
-                <el-option
-
-                  label="超级管理员"
-                  :value=1
-                >
-                  超级管理员
-                </el-option>
-                <el-option
-
-                  label="企业用户"
-                  :value=2
-                >
-                  企业用户
-                </el-option>
-              </el-select></div>
-          </div>
-
         </div>
 
       </div>
@@ -81,9 +61,10 @@
   </div>
 </template>
 <script>
-import { addSysUserApi, updateSysUserApi } from '@/api/apilist'
+import { updateRegionApi, addRegionApi } from '@/api/apilist'
+import { getTypeText } from '@/utils/lib'
 export default {
-  name: 'dialogcar',
+  name: 'addcitycode',
   props: ['comapyTypeList'],
   computed: {
 
@@ -91,19 +72,20 @@ export default {
   data () {
     return {
       req: {
-        companyId: null,
-        loginNumber: '',
-        password: '',
-        phoneNum: '',
-        userName: '',
-        userType: null
+        areaCode: '',
+        areaName: '',
+        parentCode: '',
+        sort: '',
+        type: ''
       },
       dialogVisible: false,
       id: '',
-      title: ''
+      title: '',
+      typeList: getTypeText('qutype')
     }
   },
   methods: {
+    getTypeText,
     getComp () {
       const comapyTypeList = []
       this.CommonCompany.forEach(item => {
@@ -116,12 +98,11 @@ export default {
     },
     closed () {
       this.req = {
-        companyId: null,
-        loginNumber: '',
-        password: '',
-        phoneNum: '',
-        userName: '',
-        userType: null
+        areaCode: '',
+        areaName: '',
+        parentCode: '',
+        sort: '',
+        type: ''
       }
       this.id = ''
     },
@@ -131,16 +112,15 @@ export default {
       this.dialogVisible = true
       if (c === '编辑') {
         this.id = data.id
-        this.req.userName = data.userName
-        this.req.companyId = data.companyId
-        this.req.phoneNum = data.phoneNum
-        this.req.loginNumber = data.loginNumber
-        this.req.password = data.password
-        this.req.userType = data.userType
+        this.req.areaCode = data.areaCode
+        this.req.areaName = data.areaName
+        this.req.parentCode = data.parentCode
+        this.req.sort = data.sort
+        this.req.type = Number(data.type)
       }
     },
     submit () {
-      if (!this.req.userName || !this.req.companyId || !this.req.password || !this.req.phoneNum || !this.req.loginNumber || !this.req.userType) {
+      if (!this.req.areaCode || !this.req.areaName || (this.req.type !== 1 && !this.req.parentCode) || !this.req.type || !this.req.sort) {
         this.$alert('内容不可为空', '警告', {
           confirmButtonText: '确定',
           type: 'warning'
@@ -149,13 +129,13 @@ export default {
         return
       }
       if (this.title !== '编辑') {
-        addSysUserApi(this.req).then(data => {
+        addRegionApi(this.req).then(data => {
           this.$emit('success')
           this.dialogVisible = false
         })
       } else {
         this.req.id = this.id
-        updateSysUserApi(this.req).then(data => {
+        updateRegionApi(this.req).then(data => {
           this.$emit('success')
           this.dialogVisible = false
         })

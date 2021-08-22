@@ -88,13 +88,12 @@ export default {
       };
     },
     selectChange (data) {
-      this.map.clearOverlays()
       this.carlist = data
       let carNum = ''
       this.carlist.forEach(item => {
         carNum += item.carNum
       })
-      this.carNum = carNum.slice(0, carNum.length - 1)
+      this.carNum = carNum.slice(0, carNum.length)
       this.carRealDetails(carNum)
     },
     carRealDetails (carNum) {
@@ -102,6 +101,10 @@ export default {
       let point = null
       getCarHistoryApi({ carNum, startTime: this.rangedata[0], endTime: this.rangedata[1] }).then(data => {
         console.log(data)
+        if (data.content.length === 0) {
+          return
+        }
+        this.map.clearOverlays()
         const allpoint = []
         data.content.forEach((item, index) => {
           Polyline.push(new BMapGL.Point(item.longitude, item.latitude))

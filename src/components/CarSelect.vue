@@ -16,7 +16,7 @@
     <div class='pane-right'>
       <div class='childPanel' v-if='checkedBtn.includes(1)'>
         <div class='title'>大巴车列表</div>
-        <div class='content'>
+        <div class='content niceScroller'>
           <div class='items curP flexBox flex-row' v-for='item in bigCar' :key='item.id' @click='selectCar(item)'>
             <div class='flex-1'>{{item.carNum}}</div>
             <div class='iconImg' v-if='selectIds.includes(item.id)'><i class='el-icon-check'></i></div>

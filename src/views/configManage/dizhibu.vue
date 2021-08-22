@@ -1,5 +1,6 @@
 <template>
   <div class="container-panel">
+    <AddDizhi ref='AddDizhi' @success='search'/>
     <div class="flexBox flex-row flex-end">
       <el-input
         v-model="req.airpointName"
@@ -58,12 +59,12 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { getAddressBookPageListApi } from '@/api/apilist'
-
+import { getAddressBookPageListApi, delAddressBookApi } from '@/api/apilist'
+import AddDizhi from './components/AddDizhi.vue'
 import { getTypeText } from '@/utils/lib'
 export default {
   name: 'dizhibu',
-  components: { },
+  components: { AddDizhi },
   computed: {
 
     CommonCompanylist () {
@@ -115,7 +116,7 @@ export default {
       })
     },
     handleClick (data) {
-      this.$refs.AddUser.show('编辑', data)
+      this.$refs.AddDizhi.show('编辑', data)
     },
     deletd (data) {
       this.$confirm('是否删除该数据?', '提示', {
@@ -123,15 +124,15 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // delSysUserApi({ id: data.id }).then(() => {
-        //   this.search()
-        // })
+        delAddressBookApi({ id: data.id }).then(() => {
+          this.search()
+        })
       }).catch(() => {
 
       })
     },
     add () {
-      this.$refs.AddUser.show('添加')
+      this.$refs.AddDizhi.show('添加')
     }
   },
   mounted () {

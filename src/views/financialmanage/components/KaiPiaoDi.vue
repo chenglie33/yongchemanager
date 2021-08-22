@@ -83,7 +83,7 @@ export default {
       this.dialogVisible = true
       this.orderId = data.id
       getInvoiceInfoApi({ orderId: data.id }).then(data => {
-        this.dataReponse = data.content
+        this.dataReponse = data.content || {}
       })
     }
   }

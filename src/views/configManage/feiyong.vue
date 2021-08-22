@@ -1,5 +1,6 @@
 <template>
   <div class="container-panel">
+    <AddFeiyong ref='AddFeiyong' @success='search'/>
     <div class="flexBox flex-row flex-end">
       <el-input
         v-model="req.addressName1"
@@ -68,12 +69,12 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { getCostConfigurePageListApi } from '@/api/apilist'
-
+import { getCostConfigurePageListApi, delCostConfigureApi } from '@/api/apilist'
+import AddFeiyong from './components/AddFeiyong.vue'
 import { getTypeText } from '@/utils/lib'
 export default {
   name: 'feiyong',
-  components: { },
+  components: { AddFeiyong },
   computed: {
 
     CommonCompanylist () {
@@ -126,7 +127,7 @@ export default {
       })
     },
     handleClick (data) {
-      this.$refs.AddUser.show('编辑', data)
+      this.$refs.AddFeiyong.show('编辑', data)
     },
     deletd (data) {
       this.$confirm('是否删除该数据?', '提示', {
@@ -134,15 +135,15 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // delSysUserApi({ id: data.id }).then(() => {
-        //   this.search()
-        // })
+        delCostConfigureApi({ id: data.id }).then(() => {
+          this.search()
+        })
       }).catch(() => {
 
       })
     },
     add () {
-      this.$refs.AddUser.show('添加')
+      this.$refs.AddFeiyong.show('添加')
     }
   },
   mounted () {

@@ -208,3 +208,81 @@ export function getCostConfigurePageListApi (data) {
     data
   })
 }
+
+export function addRegionApi (data) {
+  return request({
+    url: '/ht-api/config/addRegion',
+    method: 'post',
+    data
+  })
+}
+export function updateRegionApi (data) {
+  return request({
+    url: '/ht-api/config/updateRegion',
+    method: 'post',
+    data
+  })
+}
+
+export function delRegionApi (data) {
+  return request({
+    url: '/ht-api/config/delRegion',
+    method: 'post',
+    data
+  })
+}
+
+export function getRegionTreeApi () {
+  return request({
+    url: '/ht-api/common/getRegionTree',
+    method: 'get'
+  })
+}
+
+export function addAddressBookApi (data) {
+  return request({
+    url: '/ht-api/config/addAddressBook',
+    method: 'post',
+    data
+  })
+}
+
+export function updateAddressBookApi (data) {
+  return request({
+    url: '/ht-api/config/updateAddressBook',
+    method: 'post',
+    data
+  })
+}
+
+export function delAddressBookApi (data) {
+  return request({
+    url: '/ht-api/config/delAddressBook',
+    method: 'post',
+    data
+  })
+}
+
+export function addCostConfigureApi (data) {
+  return request({
+    url: '/ht-api/config/addCostConfigure',
+    method: 'post',
+    data
+  })
+}
+
+export function updateCostConfigureApi (data) {
+  return request({
+    url: '/ht-api/config/updateCostConfigure',
+    method: 'post',
+    data
+  })
+}
+
+export function delCostConfigureApi (data) {
+  return request({
+    url: '/ht-api/config/delCostConfigure',
+    method: 'post',
+    data
+  })
+}

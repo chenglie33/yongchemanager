@@ -1,5 +1,6 @@
 <template>
   <div class="container-panel">
+    <AddCityCode ref='AddCityCode' @success='search'/>
     <div class="flexBox flex-row flex-end">
       <el-input
         v-model="req.areaCode"
@@ -54,12 +55,13 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { getRegionPageListApi } from '@/api/apilist'
+import { getRegionPageListApi, delRegionApi } from '@/api/apilist'
+import AddCityCode from './components/AddCityCode.vue'
 
 import { getTypeText } from '@/utils/lib'
 export default {
   name: 'personmanage',
-  components: { },
+  components: { AddCityCode },
   computed: {
 
     CommonCompanylist () {
@@ -114,7 +116,7 @@ export default {
       })
     },
     handleClick (data) {
-      this.$refs.AddUser.show('编辑', data)
+      this.$refs.AddCityCode.show('编辑', data)
     },
     deletd (data) {
       this.$confirm('是否删除该数据?', '提示', {
@@ -122,15 +124,15 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // delSysUserApi({ id: data.id }).then(() => {
-        //   this.search()
-        // })
+        delRegionApi({ id: data.id }).then(() => {
+          this.search()
+        })
       }).catch(() => {
 
       })
     },
     add () {
-      this.$refs.AddUser.show('添加')
+      this.$refs.AddCityCode.show('添加')
     }
   },
   mounted () {

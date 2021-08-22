@@ -10,23 +10,28 @@
       <div class="flexBox flex-col">
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">用户名：</div>
-            <div><el-input v-model='req.userName'/></div>
+            <div class="labelItem">站点名称：</div>
+            <div><el-input v-model='req.airportName'/></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">登录账号：</div>
+            <div class="labelItem">区县编码：</div>
             <div>
-              <el-input v-model='req.loginNumber'/>
+               <el-cascader
+               filterable
+                  v-model="req.areaCodeArr"
+                  :options="options"
+                  :props="{ expandTrigger: 'click',  value:'key', label: 'value', children: 'children', emitPath: false}"
+                  @change="handleChange"></el-cascader>
             </div>
           </div>
         </div>
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">公司：</div>
+            <div class="labelItem">类型：</div>
             <div>
-              <el-select v-model="req.companyId" clearable placeholder="公司">
+              <el-select v-model="req.stationType" clearable placeholder="站点类型">
                 <el-option
-                  v-for="item in comapyTypeList"
+                  v-for="item in typeList"
                   :key="item.value"
                   :label="item.label"
                   :value="item.value"
@@ -36,38 +41,6 @@
               </el-select>
             </div>
           </div>
-          <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">电话：</div>
-            <div>
-              <el-input v-model='req.phoneNum'/>
-            </div>
-          </div>
-        </div>
-        <div class="item flexBox flex-row flex-middle pac-mb12x">
-          <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">密码：</div>
-            <div><el-input v-model='req.password'/></div>
-          </div>
-          <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">角色：</div>
-            <div><el-select v-model="req.userType" clearable placeholder="角色">
-                <el-option
-
-                  label="超级管理员"
-                  :value=1
-                >
-                  超级管理员
-                </el-option>
-                <el-option
-
-                  label="企业用户"
-                  :value=2
-                >
-                  企业用户
-                </el-option>
-              </el-select></div>
-          </div>
-
         </div>
 
       </div>
@@ -81,9 +54,11 @@
   </div>
 </template>
 <script>
-import { addSysUserApi, updateSysUserApi } from '@/api/apilist'
+import { addAddressBookApi, updateAddressBookApi, getRegionTreeApi } from '@/api/apilist'
+import { getTypeText } from '@/utils/lib'
+
 export default {
-  name: 'dialogcar',
+  name: 'adddizhi',
   props: ['comapyTypeList'],
   computed: {
 
@@ -91,19 +66,20 @@ export default {
   data () {
     return {
       req: {
-        companyId: null,
-        loginNumber: '',
-        password: '',
-        phoneNum: '',
-        userName: '',
-        userType: null
+        airportName: '',
+        areaCode: '',
+        stationType: '',
+        areaCodeArr: []
       },
       dialogVisible: false,
       id: '',
-      title: ''
+      title: '',
+      typeList: getTypeText('stationType'),
+      options: []
     }
   },
   methods: {
+    getTypeText,
     getComp () {
       const comapyTypeList = []
       this.CommonCompany.forEach(item => {
@@ -116,31 +92,41 @@ export default {
     },
     closed () {
       this.req = {
-        companyId: null,
-        loginNumber: '',
-        password: '',
-        phoneNum: '',
-        userName: '',
-        userType: null
+        airportName: '',
+        areaCode: '',
+        stationType: ''
       }
       this.id = ''
     },
+    getRegionTree () {
+      getRegionTreeApi().then(data => {
+        console.log(data.content)
+        this.options = data.content
+      })
+    },
+    handleChange () {
+
+    },
     show (c, data) {
       this.title = c
-
+      this.getRegionTree()
       this.dialogVisible = true
       if (c === '编辑') {
         this.id = data.id
-        this.req.userName = data.userName
-        this.req.companyId = data.companyId
-        this.req.phoneNum = data.phoneNum
-        this.req.loginNumber = data.loginNumber
-        this.req.password = data.password
-        this.req.userType = data.userType
+        this.req.airportName = data.airportName
+        this.req.areaCode = data.areaCode
+        this.req.stationType = data.stationType
+        this.req.areaCodeArr = data.areaCode
       }
     },
     submit () {
-      if (!this.req.userName || !this.req.companyId || !this.req.password || !this.req.phoneNum || !this.req.loginNumber || !this.req.userType) {
+      // if (this.req.areaCodeArr.length > 0) {
+      //   this.req.areaCode = this.req.areaCodeArr[this.req.areaCodeArr.length - 1]
+      // } else {
+      //   this.req.areaCode = this.req.areaCodeArr
+      // }
+      this.req.areaCode = this.req.areaCodeArr
+      if (!this.req.airportName || !this.req.areaCode || !this.req.stationType) {
         this.$alert('内容不可为空', '警告', {
           confirmButtonText: '确定',
           type: 'warning'
@@ -149,13 +135,13 @@ export default {
         return
       }
       if (this.title !== '编辑') {
-        addSysUserApi(this.req).then(data => {
+        addAddressBookApi(this.req).then(data => {
           this.$emit('success')
           this.dialogVisible = false
         })
       } else {
         this.req.id = this.id
-        updateSysUserApi(this.req).then(data => {
+        updateAddressBookApi(this.req).then(data => {
           this.$emit('success')
           this.dialogVisible = false
         })

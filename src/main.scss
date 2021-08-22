@@ -50,3 +50,18 @@ html,body,div,ul,li,h1,h2,h3,h4,h5,h6,p,dl,dt,dd,ol,form,input,textarea,th,td,se
 .w120x{
   width: 120px;
 }
+@mixin scrollerStyle () {
+  &::-webkit-scrollbar {
+    width:8px;background: #EAEAEA;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-thumb{
+    background:#c1c1c1;border-radius: 4px;
+  }
+  &::-webkit-scrollbar-thumb:hover{
+    background:#999999;border-radius: 4px;
+  }
+}
+.niceScroller {
+  @include scrollerStyle
+}

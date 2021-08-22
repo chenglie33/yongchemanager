@@ -167,7 +167,18 @@ export default {
     },
     closed () {
       this.fileList = []
-      this.req = {}
+      this.req = {
+        carNum: '',
+        carType: '',
+        carTypeDetails: '',
+        chargePerson: '',
+        chargePersonPhone: '',
+        companyId: '',
+        development: '',
+        sim: '',
+        siteNum: '',
+        fileList: []
+      }
       this.id = ''
     },
     show (c, data) {
