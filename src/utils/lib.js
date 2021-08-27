@@ -6,19 +6,19 @@ export function getTypeText (type, key) {
     case 'carType':
       option = [
         {
-          value: 0,
+          value: 1,
           label: '大巴'
         },
         {
-          value: 1,
+          value: 2,
           label: '中巴'
         },
         {
-          value: 2,
+          value: 3,
           label: '商务'
         },
         {
-          value: 3,
+          value: 4,
           label: '小巴'
         }
 

@@ -45,7 +45,7 @@ const develop = {
     },
     proxy: {
       '/ht-api': {
-        target: 'http://192.168.31.107:8881/'
+        target: 'http://192.168.31.107:8880/'
         // pathRewrite: {
         //   '^/ht-api': ''
         // }
