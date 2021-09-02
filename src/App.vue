@@ -6,7 +6,7 @@
 </template>
 <script>
 import { getUserInfoApi } from '@/api/apilist'
-import { getCommonData } from '@/utils/lib'
+
 export default {
   mounted () {
     getUserInfoApi().then(data => {
@@ -14,7 +14,6 @@ export default {
     }).catch(() => {
       this.$router.replace({ path: '/login/current' })
     })
-    getCommonData()
   }
 
 }

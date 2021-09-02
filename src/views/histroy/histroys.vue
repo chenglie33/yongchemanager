@@ -72,7 +72,7 @@ export default {
         this.map.centerAndZoom(new BMapGL.Point(cenLng, cenLat), zoom)
       } else {
         // 没有坐标，显示全中国
-        this.map.centerAndZoom(new BMapGL.Point(103.388611, 35.563611), 5)
+        this.map.centerAndZoom(new BMapGL.Point(120.60801, 31.303825), 5)
       }
     },
     // 根据经纬极值计算绽放级别。
@@ -156,7 +156,7 @@ export default {
   mounted () {
     this.map = new BMapGL.Map('map-baidu')
     // 创建地图实例
-    var point = new BMapGL.Point(116.404, 39.915)
+    var point = new BMapGL.Point(120.60801, 31.303825)
 
     var scaleCtrl = new BMapGL.ScaleControl() // 添加比例尺控件
     this.map.addControl(scaleCtrl)

@@ -326,3 +326,27 @@ export function getAddressBookListApi (data) {
     data
   })
 }
+
+export function addDriverInfoApi (data) {
+  return request({
+    url: '/ht-api/driver/addDriverInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function updateDriverInfoApi (data) {
+  return request({
+    url: '/ht-api/driver/updateDriverInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function delDriverInfoApi (data) {
+  return request({
+    url: '/ht-api/driver/delDriverInfo',
+    method: 'post',
+    data
+  })
+}

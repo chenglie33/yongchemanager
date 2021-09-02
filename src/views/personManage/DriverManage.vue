@@ -1,6 +1,6 @@
 <template>
   <div class="container-panel">
-    <AddUser ref='AddUser' @success='search' :comapyTypeList='comapyTypeList'/>
+    <AddDriver ref='AddDriver' @success='search' :comapyTypeList='comapyTypeList'/>
     <div class="flexBox flex-row flex-end">
       <el-select v-model="req.companyId" clearable placeholder="公司" class="pac-pr20x">
         <el-option
@@ -29,6 +29,7 @@
         style="width:340px"
       ></el-input>
       <el-button type="primary" class='pac-mr12x' @click='search'>查询</el-button>
+       <el-button type="primary" class='pac-mr12x' @click='adddriver'>添加</el-button>
     </div>
     <div>
       <el-table :data="tableData" border style="width: 100%" class="pac-mt20x">
@@ -59,6 +60,15 @@
         </el-table-column>
         <el-table-column prop="chargePersonPhone" label="负责人电话" >
         </el-table-column>
+         <el-table-column fixed="right" label="操作" width="100">
+          <template slot-scope="scope">
+            <el-button type="text" size="small"
+            @click='editRow(scope.row)'
+              >编辑</el-button
+            >
+            <el-button type="text" size="small"  @click='deletd(scope.row)'>删除</el-button>
+          </template>
+         </el-table-column>
 
       </el-table>
     </div>
@@ -77,12 +87,12 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { getDriverInfoPageListApi } from '@/api/apilist'
-import AddUser from './components/AddUser.vue'
+import { getDriverInfoPageListApi, delDriverInfoApi } from '@/api/apilist'
+import AddDriver from './components/AddDriver.vue'
 import { getTypeText } from '@/utils/lib'
 export default {
   name: 'drivermanager',
-  components: { AddUser },
+  components: { AddDriver },
   computed: {
 
     CommonCompanylist () {
@@ -111,11 +121,28 @@ export default {
   },
   methods: {
     getTypeText,
+    deletd (data) {
+      this.$confirm('是否删除该数据?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        delDriverInfoApi({ id: data.id }).then(() => {
+          this.search()
+        })
+      }).catch(() => {
+
+      })
+    },
+    adddriver () {
+      this.$refs.AddDriver.show('添加')
+    },
     getComp () {
       const comapyTypeList = []
       this.CommonCompany.forEach(item => {
         comapyTypeList.push({ value: item.id, label: item.companyName })
       })
+      console.log(comapyTypeList)
       this.comapyTypeList = comapyTypeList
     },
     handleSizeChange (v) {
@@ -137,11 +164,9 @@ export default {
         this.total = Number(data.content.pageInfo.rows)
       })
     },
-    handleClick (data) {
-      this.$refs.AddUser.show('编辑', data)
-    },
-    add () {
-      this.$refs.AddUser.show('添加')
+
+    editRow (data) {
+      this.$refs.AddDriver.show('编辑', data)
     }
   },
   mounted () {

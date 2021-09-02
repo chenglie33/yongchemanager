@@ -122,7 +122,7 @@ export default {
   mounted () {
     this.map = new BMapGL.Map('map-baidu')
     // 创建地图实例
-    var point = new BMapGL.Point(116.404, 39.915)
+    var point = new BMapGL.Point(120.60801, 31.303825)
     // // 创建点坐标
     // var myIcon = new BMapGL.Icon(che_2, new BMapGL.Size(60, 60), {
     // // 指定定位位置。
