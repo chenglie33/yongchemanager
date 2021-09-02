@@ -10,11 +10,11 @@
       <div class="flexBox flex-col">
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">区县：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>区县：</div>
             <div><el-input v-model='req.areaName'/></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">区县编码：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>区县编码：</div>
             <div>
               <el-input v-model='req.areaCode'/>
             </div>
@@ -24,13 +24,13 @@
           <div class="flex-1 flexBox flex-row flex-middle">
             <div class="labelItem">父级编码：</div>
             <div>
-              <el-input v-model='req.parentCode'/>
+              <el-input :disabled='true' v-model='req.parentCode'/>
             </div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
             <div class="labelItem">类型：</div>
             <div>
-              <el-select v-model="req.type" clearable placeholder="类型">
+              <el-select v-model="req.type" :disabled='true' clearable placeholder="类型">
                 <el-option
                   v-for="item in typeList"
                   :key="item.value"
@@ -112,15 +112,18 @@ export default {
       this.dialogVisible = true
       if (c === '编辑') {
         this.id = data.id
-        this.req.areaCode = data.areaCode
-        this.req.areaName = data.areaName
+        this.req.areaCode = data.key
+        this.req.areaName = data.value
         this.req.parentCode = data.parentCode
         this.req.sort = data.sort
         this.req.type = Number(data.type)
+      } else {
+        this.req.parentCode = data.key
+        this.req.type = Number(data.type) + 1
       }
     },
     submit () {
-      if (!this.req.areaCode || !this.req.areaName || (this.req.type !== 1 && !this.req.parentCode) || !this.req.type || !this.req.sort) {
+      if (!this.req.areaCode || !this.req.areaName || (this.req.type !== 1 && !this.req.parentCode) || !this.req.type) {
         this.$alert('内容不可为空', '警告', {
           confirmButtonText: '确定',
           type: 'warning'

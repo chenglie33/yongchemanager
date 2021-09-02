@@ -10,35 +10,31 @@
       <div class="flexBox flex-col">
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem"><span class='redIcon'>*</span>站点名称：</div>
-            <div><el-input v-model='req.airportName'/></div>
+            <div class="labelItem"><span class='redIcon'>*</span>公司名称</div>
+            <div><el-input v-model='req.companyName'/></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem"><span class='redIcon'>*</span>区县编码：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>区县</div>
             <div>
-               <el-cascader
+
+              <el-cascader
                filterable
-                  v-model="req.areaCodeArr"
+                  v-model="req.areaCode"
                   :options="options"
-                  :props="{ checkStrictly: true,expandTrigger: 'click',  value:'key', label: 'value', children: 'children', emitPath: false}"
-                  @change="handleChange"></el-cascader>
+                  :props="{ expandTrigger: 'click',  value:'key', label: 'value', children: 'children', emitPath: false}"
+                  ></el-cascader>
             </div>
           </div>
         </div>
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem"><span class='redIcon'>*</span>类型：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>地址</div>
+            <div><el-input v-model='req.address'/></div>
+          </div>
+          <div class="flex-1 flexBox flex-row flex-middle">
+            <div class="labelItem"><span class='redIcon'>*</span>统一编码</div>
             <div>
-              <el-select v-model="req.stationType" clearable placeholder="站点类型">
-                <el-option
-                  v-for="item in typeList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                  {{ item.label }}
-                </el-option>
-              </el-select>
+              <el-input v-model='req.creditCode'/>
             </div>
           </div>
         </div>
@@ -54,11 +50,10 @@
   </div>
 </template>
 <script>
-import { addAddressBookApi, updateAddressBookApi, getRegionTreeApi } from '@/api/apilist'
+import { updateCompanyInfoApi, addCompanyInfoApi, getRegionTreeApi } from '@/api/apilist'
 import { getTypeText } from '@/utils/lib'
-
 export default {
-  name: 'adddizhi',
+  name: 'addcitycode',
   props: ['comapyTypeList'],
   computed: {
 
@@ -66,23 +61,29 @@ export default {
   data () {
     return {
       req: {
-        airportName: '',
+        companyName: '',
+        address: '',
         areaCode: '',
-        stationType: '',
-        areaCodeArr: []
+        creditCode: ''
       },
+      options: [],
       dialogVisible: false,
       id: '',
       title: '',
-      typeList: getTypeText('stationType'),
-      options: []
+      typeList: getTypeText('qutype')
     }
   },
   methods: {
     getTypeText,
+    getRegionTree () {
+      getRegionTreeApi().then(data => {
+        console.log(data.content)
+        this.options = data.content
+      })
+    },
     getComp () {
       const comapyTypeList = []
-      this.CommonCompany.forEach(item => {
+      this.comapyTypeList.forEach(item => {
         comapyTypeList.push({ value: item.id, label: item.companyName })
       })
       this.comapyTypeList = comapyTypeList
@@ -92,41 +93,28 @@ export default {
     },
     closed () {
       this.req = {
-        airportName: '',
+        companyName: '',
+        address: '',
         areaCode: '',
-        stationType: ''
+        creditCode: ''
       }
       this.id = ''
     },
-    getRegionTree () {
-      getRegionTreeApi().then(data => {
-        console.log(data.content)
-        this.options = data.content
-      })
-    },
-    handleChange () {
-
-    },
     show (c, data) {
-      this.title = c
       this.getRegionTree()
+      this.title = c
+
       this.dialogVisible = true
       if (c === '编辑') {
         this.id = data.id
-        this.req.airportName = data.airportName
+        this.req.companyName = data.companyName
+        this.req.address = data.address
         this.req.areaCode = data.areaCode
-        this.req.stationType = data.stationType
-        this.req.areaCodeArr = data.areaCode
+        this.req.creditCode = data.creditCode
       }
     },
     submit () {
-      // if (this.req.areaCodeArr.length > 0) {
-      //   this.req.areaCode = this.req.areaCodeArr[this.req.areaCodeArr.length - 1]
-      // } else {
-      //   this.req.areaCode = this.req.areaCodeArr
-      // }
-      this.req.areaCode = this.req.areaCodeArr
-      if (!this.req.airportName || !this.req.areaCode || !this.req.stationType) {
+      if (!this.req.companyName || !this.req.address || !this.req.areaCode || !this.req.creditCode) {
         this.$alert('内容不可为空', '警告', {
           confirmButtonText: '确定',
           type: 'warning'
@@ -135,13 +123,13 @@ export default {
         return
       }
       if (this.title !== '编辑') {
-        addAddressBookApi(this.req).then(data => {
+        addCompanyInfoApi(this.req).then(data => {
           this.$emit('success')
           this.dialogVisible = false
         })
       } else {
         this.req.id = this.id
-        updateAddressBookApi(this.req).then(data => {
+        updateCompanyInfoApi(this.req).then(data => {
           this.$emit('success')
           this.dialogVisible = false
         })

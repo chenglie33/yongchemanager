@@ -95,9 +95,9 @@
       background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page.sync="currentPage"
-        :page-size="100"
-        layout="prev, pager, next, jumper"
+        :current-page.sync="req.pageNo"
+        :page-size="req.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       >
       </el-pagination>
@@ -136,7 +136,7 @@ export default {
       total: 0,
       req: {
         pageNo: 1,
-        pageSize: 50,
+        pageSize: 10,
         driverName: '',
         userName: '',
         input: '',
@@ -175,7 +175,10 @@ export default {
       })
       this.comapyTypeList = comapyTypeList
     },
-    handleSizeChange () {},
+    handleSizeChange (v) {
+      this.req.pageSize = v
+      this.getList()
+    },
     handleCurrentChange (v) {
       this.req.pageNo = v
       this.getList()
@@ -185,8 +188,13 @@ export default {
       this.getList()
     },
     getList () {
-      this.req.startTime = this.rangedata[0]
-      this.req.endTime = this.rangedata[1]
+      if (!this.rangedata || this.rangedata.length === 0) {
+        this.req.startTime = ''
+        this.req.endTime = ''
+      } else {
+        this.req.startTime = this.rangedata[0]
+        this.req.endTime = this.rangedata[1]
+      }
       this.req.carNum = this.carNum
       this.req.companyId = this.companyId
       this.req.driverName = this.driverName

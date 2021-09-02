@@ -61,8 +61,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
-        :page-size="100"
-        layout="prev, pager, next, jumper"
+        :page-size="req.pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       >
       </el-pagination>
@@ -101,7 +101,7 @@ export default {
       total: 0,
       req: {
         pageNo: 1,
-        pageSize: 50,
+        pageSize: 10,
         orderId: '',
         orderStatus: '',
         rangedata: [dayjs(datec).format('YYYY-MM-DD HH:mm:ss'), dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')]
@@ -123,7 +123,10 @@ export default {
       })
       this.comapyTypeList = comapyTypeList
     },
-    handleSizeChange () {},
+    handleSizeChange (v) {
+      this.req.pageSize = v
+      this.getList()
+    },
     handleCurrentChange (v) {
       this.req.pageNo = v
       this.getList()
@@ -133,8 +136,14 @@ export default {
       this.getList()
     },
     getList () {
-      this.req.startTime = this.rangedata[0]
-      this.req.endTime = this.rangedata[1]
+      if (!this.rangedata || this.rangedata.length === 0) {
+        this.req.startTime = ''
+        this.req.endTime = ''
+      } else {
+        this.req.startTime = this.rangedata[0]
+        this.req.endTime = this.rangedata[1]
+      }
+
       this.req.orderStatus = this.req.orderStatus === '' ? null : this.orderStatus
       getInvoiceOrderPageListApi(this.req).then(data => {
         console.log(data)

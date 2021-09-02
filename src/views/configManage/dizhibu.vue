@@ -50,7 +50,7 @@
         @current-change="handleCurrentChange"
         :current-page.sync="req.pageNo"
         :page-size="req.pageSize"
-        layout="prev, pager, next, jumper"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       >
       </el-pagination>
@@ -62,6 +62,7 @@ import { mapState } from 'vuex'
 import { getAddressBookPageListApi, delAddressBookApi } from '@/api/apilist'
 import AddDizhi from './components/AddDizhi.vue'
 import { getTypeText } from '@/utils/lib'
+
 export default {
   name: 'dizhibu',
   components: { AddDizhi },
@@ -79,7 +80,7 @@ export default {
     return {
       req: {
         pageNo: 1,
-        pageSize: 50,
+        pageSize: 10,
         companyId: null,
         airpointName: '',
         stationType: null
@@ -100,7 +101,10 @@ export default {
       })
       this.comapyTypeList = comapyTypeList
     },
-    handleSizeChange () {},
+    handleSizeChange (v) {
+      this.req.pageSize = v
+      this.getList()
+    },
     handleCurrentChange (v) {
       this.req.pageNo = v
       this.getList()

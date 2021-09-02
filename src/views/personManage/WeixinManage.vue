@@ -4,7 +4,7 @@
 
       <el-input
         v-model="req.userName"
-        placeholder="司机"
+        placeholder="微信名/手机号"
         class="pac-pr20x"
         style="width:340px"
       ></el-input>
@@ -26,6 +26,8 @@
             <div>{{getTypeText('wxuserType', scope.row.userType)}}</div>
           </template>
         </el-table-column>
+         <el-table-column prop="createTime" label="注册时间" >
+        </el-table-column>
 
       </el-table>
     </div>
@@ -35,7 +37,7 @@
         @current-change="handleCurrentChange"
         :current-page.sync="req.pageNo"
         :page-size="req.pageSize"
-        layout="prev, pager, next, jumper"
+        layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       >
       </el-pagination>
@@ -64,7 +66,7 @@ export default {
     return {
       req: {
         pageNo: 1,
-        pageSize: 50,
+        pageSize: 10,
         userName: ''
 
       },
@@ -83,7 +85,10 @@ export default {
       })
       this.comapyTypeList = comapyTypeList
     },
-    handleSizeChange () {},
+    handleSizeChange (v) {
+      this.req.pageSize = v
+      this.getList()
+    },
     handleCurrentChange (v) {
       this.req.pageNo = v
       this.getList()

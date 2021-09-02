@@ -2,6 +2,16 @@
   <div class="container-panel">
     <DialogCar ref='diag' :carTypeList='carTypeList' :comapyTypeList='comapyTypeList' @dataupdate='search'/>
     <div class="flexBox flex-row flex-end">
+       <el-select v-model="req.companyId" clearable placeholder="公司" class="pac-pr20x">
+        <el-option
+          v-for="item in comapyTypeList"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+          {{ item.label }}
+        </el-option>
+      </el-select>
       <el-input v-model='req.carNum' placeholder="车牌号码" class='w120x pac-mr12x'/>
       <el-select v-model="req.carType" placeholder="车辆类型" class="pac-pr20x">
         <el-option
@@ -39,11 +49,8 @@
             <div>{{getTypeText('carType',scope.row.carType)}}</div>
           </template>
         </el-table-column>
-        <el-table-column prop="companyId" label="企业名称" >
+        <el-table-column prop="companyName" label="企业名称" >
 
-          <template slot-scope="scope">
-            <div>{{getTypeTextRemote(comapyTypeList,scope.row.companyId)}}</div>
-          </template>
         </el-table-column>
         <el-table-column prop="carPicture" label="车辆照片" >
           <template slot-scope="scope">
@@ -57,9 +64,9 @@
           <template slot-scope="scope">
 
             <el-button type="text" size="small" @click='edit(scope.row)'>编辑</el-button>
-            <el-button @click="handleClick(scope.row)" type="text" size="small"
+            <!-- <el-button @click="handleClick(scope.row)" type="text" size="small"
               >历史行程</el-button
-            >
+            > -->
              <el-button type="text" size="small" @click='deleteD(scope.row)'>删除</el-button>
           </template>
         </el-table-column>
@@ -73,7 +80,7 @@
         @current-change="handleCurrentChange"
         :current-page.sync="req.pageNo"
         :page-size="req.pageSize"
-       layout="prev, pager, next, jumper"
+       layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       >
       </el-pagination>
@@ -85,7 +92,6 @@ import { getCarInfoPageListApi, delCarInfoApi } from '@/api/apilist'
 import { getTypeText, getTypeTextRemote } from '@/utils/lib'
 import DialogCar from './components/DialogCar.vue'
 import { mapState } from 'vuex'
-
 export default {
   name: 'carmanage',
   components: { DialogCar },
@@ -94,7 +100,7 @@ export default {
       comapyTypeList: [],
       req: {
         pageNo: 1,
-        pageSize: 50
+        pageSize: 10
       },
       total: 0,
       currentPage: 1,
@@ -103,17 +109,33 @@ export default {
       value: null,
       carTypeList: getTypeText('carType'),
       tableData: [
-      ]
+      ],
+      CommonComCommonCompanypany: []
     }
   },
   computed: mapState([
   // 映射 this.count 为 store.state.count
     'CommonCompany', 'CommonDriver', 'CommonOrder'
   ]),
+  watch: {
+    CommonCompany (v) {
+      this.getComp()
+    }
+  },
   methods: {
     getTypeTextRemote,
     getTypeText,
-    handleSizeChange () {},
+    getComp () {
+      const comapyTypeList = []
+      this.CommonCompany.forEach(item => {
+        comapyTypeList.push({ value: item.id, label: item.companyName })
+      })
+      this.comapyTypeList = comapyTypeList
+    },
+    handleSizeChange (v) {
+      this.req.pageSize = v
+      this.getcar()
+    },
     handleCurrentChange (v) {
       this.req.pageNo = v
       this.getcar()
@@ -167,6 +189,7 @@ export default {
     }
   },
   mounted () {
+    this.getComp()
     setTimeout(() => {
       this.getcar()
     }, 10)

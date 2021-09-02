@@ -31,7 +31,7 @@
             <div class='dropDownPanel posA flexBox flex-col'>
             <div class='panel-item' @click="$router.push('/personmanage')">系统用户</div>
             <div class='panel-item' @click="$router.push('/personmanage/driver')">司机</div>
-            <div class='panel-item' @click="$router.push('/personmanage/weixin')">微信用户</div>
+            <div class='panel-item' @click="$router.push('/personmanage/weixin')">会员管理</div>
           </div>
         </div>
         <div class='menuItem flexBox flex-col flex-middle flex-center' :class='{active:$route.meta.activeMenu==="configmanage"}' >
@@ -41,6 +41,7 @@
             <div class='panel-item' @click="$router.push('/configmanage')">行政区</div>
             <div class='panel-item' @click="$router.push('/configmanage/dizhibu')">地址簿</div>
             <div class='panel-item' @click="$router.push('/configmanage/feiyong')">费用</div>
+            <div class='panel-item' @click="$router.push('/configmanage/gongsi')">公司</div>
           </div>
         </div>
         <div class='menuItem flexBox flex-col flex-middle flex-center'>

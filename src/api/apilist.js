@@ -286,3 +286,43 @@ export function delCostConfigureApi (data) {
     data
   })
 }
+
+export function getCompanyInfoPageApi (data) {
+  return request({
+    url: '/ht-api/company/getCompanyInfoPage',
+    method: 'post',
+    data
+  })
+}
+
+export function addCompanyInfoApi (data) {
+  return request({
+    url: '/ht-api/company/addCompanyInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function updateCompanyInfoApi (data) {
+  return request({
+    url: '/ht-api/company/updateCompanyInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function delCompanyInfoApi (data) {
+  return request({
+    url: '/ht-api/company/delCompanyInfo',
+    method: 'post',
+    data
+  })
+}
+
+export function getAddressBookListApi (data) {
+  return request({
+    url: '/ht-api/config/getAddressBookList',
+    method: 'post',
+    data
+  })
+}

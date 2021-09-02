@@ -10,11 +10,11 @@
       <div class="flexBox flex-col">
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">车牌号：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>车牌号：</div>
             <div><el-input v-model="req.carNum" /></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">车型：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>车型：</div>
             <div>
               <el-select
                 v-model="req.carType"
@@ -35,7 +35,7 @@
         </div>
         <div class="item flexBox flex-row flex-middle  pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">公司：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>公司：</div>
             <div><el-select
                 v-model="req.companyId"
                 placeholder="车辆类型"
@@ -53,14 +53,14 @@
 
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-                <div class="labelItem">负责人：</div>
+                <div class="labelItem"><span class='redIcon'>*</span>负责人：</div>
                 <div><el-input v-model="req.chargePerson" /></div>
               </div>
 
         </div>
         <div class="item flexBox flex-row flex-middle  pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">负责人电话：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>负责人电话：</div>
             <div><el-input v-model="req.chargePersonPhone" /></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
@@ -71,24 +71,24 @@
 
         <div class="item flexBox flex-row flex-middle  pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">部门：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>部门：</div>
             <div><el-input v-model="req.development" /></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">座位数：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>座位数：</div>
             <div><el-input v-model="req.siteNum" /></div>
           </div>
         </div>
 
         <div class="item flexBox flex-row flex-middle  pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">车品牌：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>车品牌：</div>
             <div><el-input v-model="req.carTypeDetails" /></div>
           </div>
         </div>
         <div class="item flexBox flex-row flex-middle  pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">车辆照片：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>车辆照片：</div>
             <div>
               <el-upload
   class="upload-demo"
@@ -211,8 +211,17 @@ export default {
       }
     },
     submit () {
-      if (!this.req.carNum || !this.req.carType || !this.req.carTypeDetails || !this.req.chargePerson || !this.req.chargePersonPhone || !this.req.companyId || !this.req.development || !this.req.siteNum || !this.req.sim || this.fileList.length === 0) {
+      if (!this.req.carNum || !this.req.carType || !this.req.carTypeDetails || !this.req.chargePerson || !this.req.chargePersonPhone || !this.req.companyId || !this.req.development || !this.req.siteNum || this.fileList.length === 0) {
         this.$alert('内容不可为空', '警告', {
+          confirmButtonText: '确定',
+          type: 'warning'
+
+        })
+        return
+      }
+      var reg = /^\d{11}$/
+      if (!reg.test(this.req.chargePersonPhone)) {
+        this.$alert('请校验你的手机号码', '警告', {
           confirmButtonText: '确定',
           type: 'warning'
 

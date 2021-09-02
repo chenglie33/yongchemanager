@@ -10,11 +10,11 @@
       <div class="flexBox flex-col">
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">用户名：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>用户名：</div>
             <div><el-input v-model='req.userName'/></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">登录账号：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>登录账号：</div>
             <div>
               <el-input v-model='req.loginNumber'/>
             </div>
@@ -22,7 +22,7 @@
         </div>
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">公司：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>公司：</div>
             <div>
               <el-select v-model="req.companyId" clearable placeholder="公司">
                 <el-option
@@ -37,7 +37,7 @@
             </div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">电话：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>电话：</div>
             <div>
               <el-input v-model='req.phoneNum'/>
             </div>
@@ -45,11 +45,11 @@
         </div>
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">密码：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>密码：</div>
             <div><el-input v-model='req.password'/></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">角色：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>角色：</div>
             <div><el-select v-model="req.userType" clearable placeholder="角色">
                 <el-option
 
@@ -104,13 +104,7 @@ export default {
     }
   },
   methods: {
-    getComp () {
-      const comapyTypeList = []
-      this.CommonCompany.forEach(item => {
-        comapyTypeList.push({ value: item.id, label: item.companyName })
-      })
-      this.comapyTypeList = comapyTypeList
-    },
+
     handleClose () {
       this.dialogVisible = false
     },
@@ -126,6 +120,7 @@ export default {
       this.id = ''
     },
     show (c, data) {
+      // this.getComp()
       this.title = c
 
       this.dialogVisible = true
@@ -142,6 +137,15 @@ export default {
     submit () {
       if (!this.req.userName || !this.req.companyId || !this.req.password || !this.req.phoneNum || !this.req.loginNumber || !this.req.userType) {
         this.$alert('内容不可为空', '警告', {
+          confirmButtonText: '确定',
+          type: 'warning'
+
+        })
+        return
+      }
+      var reg = /^\d{11}$/
+      if (!reg.test(this.req.phoneNum)) {
+        this.$alert('请校验你的手机号码', '警告', {
           confirmButtonText: '确定',
           type: 'warning'
 

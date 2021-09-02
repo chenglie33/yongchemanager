@@ -147,6 +147,14 @@ const routes = [
           activeMenu: 'feiyong'
         },
         component: () => import(/* webpackChunkName: "feiyong" */ '@/views/configManage/feiyong.vue')
+      },
+      {
+        path: '/configmanage/gongsi',
+        name: 'gongsi',
+        meta: {
+          activeMenu: 'gongsi'
+        },
+        component: () => import(/* webpackChunkName: "gongsi" */ '@/views/configManage/company.vue')
       }
     ]
   },

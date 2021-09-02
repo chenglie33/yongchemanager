@@ -144,8 +144,9 @@ export default {
     this.map.addControl(scaleCtrl)
     var zoomCtrl = new BMapGL.ZoomControl() // 添加缩放控件
     this.map.addControl(zoomCtrl)
-    var cityCtrl = new BMapGL.CityListControl() // 添加城市列表控件
-    this.map.addControl(cityCtrl)
+    // var cityCtrl = new BMapGL.CityListControl() // 添加城市列表控件
+    // this.map.addControl(cityCtrl)
+    this.map.enableScrollWheelZoom(true)
     this.map.centerAndZoom(point, 10)
   }
 }

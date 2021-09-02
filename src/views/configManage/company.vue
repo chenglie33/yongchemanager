@@ -1,20 +1,10 @@
 <template>
   <div class="container-panel">
-    <AddUser ref='AddUser' @success='search' :comapyTypeList='comapyTypeList'/>
+    <addcompany ref='addcompany' @success='search'/>
     <div class="flexBox flex-row flex-end">
-      <el-select v-model="req.companyId" clearable placeholder="公司" class="pac-pr20x">
-        <el-option
-          v-for="item in comapyTypeList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-          {{ item.label }}
-        </el-option>
-      </el-select>
       <el-input
-        v-model="req.userName"
-        placeholder="用户名"
+        v-model="req.queryStr"
+        placeholder="公司名称/信用代码"
         class="pac-pr20x"
         style="width:340px"
       ></el-input>
@@ -23,17 +13,15 @@
     </div>
     <div>
       <el-table :data="tableData" border style="width: 100%" class="pac-mt20x">
-        <el-table-column fixed prop="userName" label="用户名" width="150">
+        <el-table-column prop="companyName" label="公司名称">
         </el-table-column>
-        <el-table-column prop="companyName" label="公司" >
+        <el-table-column prop="creditCode" label="统一信用代码">
         </el-table-column>
-        <el-table-column prop="phoneNum" label="电话" >
+        <el-table-column prop="areaName" label="区县">
         </el-table-column>
-        <el-table-column prop="userType" label="角色" >
-          <template slot-scope="scope">
-            <div>{{getTypeText('userType', scope.row.userType)}}</div>
-          </template>
+        <el-table-column prop="address" label="地址">
         </el-table-column>
+
         <el-table-column fixed="right" label="操作" width="100">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small"
@@ -59,30 +47,29 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import { getSysUserPageListApi, delSysUserApi } from '@/api/apilist'
-import AddUser from './components/AddUser.vue'
+import { getCompanyInfoPageApi, delCompanyInfoApi } from '@/api/apilist'
+import addcompany from './components/addcompany.vue'
+
 import { getTypeText } from '@/utils/lib'
 export default {
   name: 'personmanage',
-  components: { AddUser },
+  components: { addcompany },
   computed: {
 
+    CommonCompanylist () {
+      this.getComp()
+      return this.CommonCompany
+    },
     ...mapState([
       'CommonCompany', 'CommonDriver', 'CommonOrder'
     ])
-  },
-  watch: {
-    CommonCompany (v) {
-      this.getComp()
-    }
   },
   data () {
     return {
       req: {
         pageNo: 1,
         pageSize: 10,
-        companyId: null,
-        userName: ''
+        queryStr: ''
 
       },
       total: 0,
@@ -117,13 +104,13 @@ export default {
       this.getList()
     },
     getList () {
-      getSysUserPageListApi(this.req).then(data => {
+      getCompanyInfoPageApi(this.req).then(data => {
         this.tableData = data.content.list
         this.total = Number(data.content.pageInfo.rows)
       })
     },
     handleClick (data) {
-      this.$refs.AddUser.show('编辑', data)
+      this.$refs.addcompany.show('编辑', data)
     },
     deletd (data) {
       this.$confirm('是否删除该数据?', '提示', {
@@ -131,7 +118,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        delSysUserApi({ id: data.id }).then(() => {
+        delCompanyInfoApi({ id: data.id }).then(() => {
           this.search()
         })
       }).catch(() => {
@@ -139,12 +126,11 @@ export default {
       })
     },
     add () {
-      this.$refs.AddUser.show('添加')
+      this.$refs.addcompany.show('添加')
     }
   },
   mounted () {
     this.getList()
-    this.getComp()
   }
 }
 </script>
