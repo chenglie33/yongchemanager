@@ -1,6 +1,6 @@
 <template>
   <div class="container-panel">
-    <AddFeiyong ref='AddFeiyong' @success='search'/>
+    <AddFeiyong ref='AddFeiyong' :activeName='activeName' @success='search'/>
 
     <el-tabs v-model="activeName">
     <el-tab-pane label="飞机" name="飞机"></el-tab-pane>

@@ -10,7 +10,7 @@
       <div class="flexBox flex-col">
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem"><span class='redIcon'>*</span>地址1：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>出发地：</div>
             <div>
 
                <el-cascader
@@ -22,7 +22,7 @@
             </div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem"><span class='redIcon'>*</span>地址2：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>目的地：</div>
             <div>
               <!-- <el-input v-model='req.address2'/> -->
               <el-cascader
@@ -139,10 +139,11 @@ import { updateCostConfigureApi, addCostConfigureApi, getRegionTreeApi, getAddre
 import { getTypeText } from '@/utils/lib'
 export default {
   name: 'friyong',
-  props: ['comapyTypeList'],
+  props: ['comapyTypeList', 'activeName'],
   computed: {
 
   },
+
   data () {
     return {
       pickeroptions: {
@@ -173,17 +174,6 @@ export default {
         {
           value: 2,
           label: '送机'
-        },
-        {
-          value: 3,
-          label: '接火车'
-        }, {
-          value: 4,
-          label: '送火车'
-        },
-        {
-          value: 5,
-          label: '包车'
         }
 
       ],
@@ -202,6 +192,34 @@ export default {
     },
     addressline (v) {
       this.req.passThrough = v.toString()
+    },
+    activeName (v) {
+      if (v === '飞机') {
+        this.typeList = [{
+          value: 1,
+          label: '接机'
+        },
+        {
+          value: 2,
+          label: '送机'
+        }]
+        this.req.configType = 1
+      } else if (v === '火车') {
+        this.typeList = [{
+          value: 3,
+          label: '接火车'
+        }, {
+          value: 4,
+          label: '送火车'
+        }]
+        this.req.configType = 3
+      } else {
+        this.typeList = [{
+          value: 5,
+          label: '包车'
+        }]
+        this.req.configType = 5
+      }
     }
   },
   methods: {

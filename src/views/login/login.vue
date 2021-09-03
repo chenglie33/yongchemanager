@@ -44,7 +44,7 @@ export default {
       }).then(data => {
         if (data.msg === 'OK') {
           getUserInfoApi().then((data) => {
-            this.$store.commit('SET_USERINFO', {})
+            this.$store.commit('SET_USERINFO', data.content)
             this.$router.push({ path: '/home' })
             getCommonData()
           })

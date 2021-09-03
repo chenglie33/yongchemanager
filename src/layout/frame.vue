@@ -62,6 +62,14 @@ export default {
   // 映射 this.count 为 store.state.count
     'userInfo'
   ]),
+  watch: {
+    '$store.state.userInfo': {
+      handler: function (v) {
+        console.log(v)
+      },
+      deep: true
+    }
+  },
   methods: {
     loginout () {
       this.$confirm('您确定要退出操作系统吗?', '提示', {
