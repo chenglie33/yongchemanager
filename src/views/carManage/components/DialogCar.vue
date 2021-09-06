@@ -64,7 +64,7 @@
             <div><el-input v-model="req.chargePersonPhone" /></div>
           </div>
           <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem">sim：</div>
+            <div class="labelItem"><span class='redIcon'>*</span>sim：</div>
             <div><el-input v-model="req.sim" /></div>
           </div>
         </div>
@@ -211,7 +211,7 @@ export default {
       }
     },
     submit () {
-      if (!this.req.carNum || !this.req.carType || !this.req.carTypeDetails || !this.req.chargePerson || !this.req.chargePersonPhone || !this.req.companyId || !this.req.development || !this.req.siteNum || this.fileList.length === 0) {
+      if (!this.req.sim || !this.req.carNum || !this.req.carType || !this.req.carTypeDetails || !this.req.chargePerson || !this.req.chargePersonPhone || !this.req.companyId || !this.req.development || !this.req.siteNum || this.fileList.length === 0) {
         this.$alert('内容不可为空', '警告', {
           confirmButtonText: '确定',
           type: 'warning'
