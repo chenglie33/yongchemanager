@@ -1,5 +1,6 @@
 <template>
   <div class="container-panel">
+    <Paidan ref='paidan' @success='search'/>
     <CommentDia ref='comm'/>
     <DriverSelect ref='DriverSelect' @success='search'/>
     <div class="flexBox flex-row flex-end">
@@ -80,10 +81,17 @@
               >查看评价</el-button
             >
              <el-button
-             v-if='scope.row.orderStatus===0'
+             v-if='scope.row.orderStatus===0 && scope.row.orderCostStatus>1'
             @click='paidan(scope.row)'
               type="text"
               >派单</el-button
+            >
+
+            <el-button
+             v-if='scope.row.orderStatus >0'
+            @click='paidandetail(scope.row)'
+              type="text"
+              >派单详情</el-button
             >
 
           </template>
@@ -110,10 +118,11 @@ import { getTypeText } from '@/utils/lib'
 import { mapState } from 'vuex'
 import CommentDia from './components/CommentDia.vue'
 import DriverSelect from './components/DriverSelect.vue'
+import Paidan from './components/Paidan.vue'
 export default {
   name: 'ordermanage',
   components: {
-    CommentDia, DriverSelect
+    CommentDia, DriverSelect, Paidan
   },
   computed: {
 
@@ -166,7 +175,7 @@ export default {
       this.$refs.comm.show(data)
     },
     paidan (data) {
-      this.$refs.DriverSelect.show(data)
+      this.$refs.paidan.show(data.id)
     },
     getComp () {
       const comapyTypeList = []
@@ -174,6 +183,9 @@ export default {
         comapyTypeList.push({ value: item.id, label: item.companyName })
       })
       this.comapyTypeList = comapyTypeList
+    },
+    paidandetail (data) {
+      this.$refs.paidan.show(data.id, true)
     },
     handleSizeChange (v) {
       this.req.pageSize = v

@@ -120,6 +120,24 @@ const routes = [
     ]
   },
   {
+    path: '/profile',
+    name: 'profile',
+    component: Frame,
+    redirect: '/',
+    children: [
+      {
+        path: '/',
+        name: 'profile',
+        activeMenu: 'profile',
+        meta: {
+          activeMenu: 'profile'
+        },
+        component: () => import('@/views/profile/profile.vue')
+      }
+
+    ]
+  },
+  {
     path: '/configmanage',
     name: 'configmanage',
     component: Frame,

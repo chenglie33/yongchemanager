@@ -350,3 +350,11 @@ export function delDriverInfoApi (data) {
     data
   })
 }
+
+export function getOrderDetailsApi (data) {
+  return request({
+    url: '/ht-api/order/getOrderDetails',
+    method: 'post',
+    data
+  })
+}

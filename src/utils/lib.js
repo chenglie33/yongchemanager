@@ -7,19 +7,19 @@ export function getTypeText (type, key) {
       option = [
         {
           value: 1,
-          label: '大巴'
+          label: '大巴(39-53座，包含司机）'
         },
         {
           value: 2,
-          label: '中巴'
+          label: '中巴（14-19座，包含司机）'
         },
         {
           value: 3,
-          label: '商务'
+          label: '商务(7座，包含司机）'
         },
         {
           value: 4,
-          label: '小巴'
+          label: '小巴（5座，包含司机）'
         }
 
       ]

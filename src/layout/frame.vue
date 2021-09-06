@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class='menuItem flexBox flex-col flex-middle flex-center'>
-          <img class='imgmenu' src='@/assets/tjfx.png'/>
+          <img class='imgmenu'  @click="$router.push('/profile')" src='@/assets/tjfx.png'/>
           统计分析
         </div>
       </div>

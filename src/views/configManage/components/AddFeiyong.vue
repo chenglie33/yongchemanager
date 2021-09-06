@@ -313,7 +313,7 @@ export default {
         this.req.configType = Number(data.configType)
         this.getAddressBookList(this.req.configType)
       } else {
-        this.getAddressBookList(1)
+        this.getAddressBookList(this.req.configType)
       }
     },
     submit () {
