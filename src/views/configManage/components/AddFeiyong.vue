@@ -8,6 +8,30 @@
       @closed='closed'
     >
       <div class="flexBox flex-col">
+         <div class="item flexBox flex-row flex-middle pac-mb12x">
+          <div class="flex-1 flexBox flex-row flex-middle">
+            <div class="labelItem"><span class='redIcon'>*</span>费用类型：</div>
+            <div>
+              <el-select v-model="req.configType" placeholder="类型" @change='typeChange'>
+                <el-option
+                  v-for="item in typeList"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                  {{ item.label }}
+                </el-option>
+              </el-select>
+            </div>
+          </div>
+          <div class="flex-1 flexBox flex-row flex-middle">
+            <div class="labelItem"><span class='redIcon'>*</span>费用：</div>
+            <div>
+              <el-input v-model='req.cost' type="number"/>
+            </div>
+          </div>
+
+        </div>
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
             <div class="labelItem"><span class='redIcon'>*</span>出发地：</div>
@@ -34,30 +58,7 @@
             </div>
           </div>
         </div>
-        <div class="item flexBox flex-row flex-middle pac-mb12x">
-          <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem"><span class='redIcon'>*</span>费用类型：</div>
-            <div>
-              <el-select v-model="req.configType" placeholder="类型" @change='typeChange'>
-                <el-option
-                  v-for="item in typeList"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                >
-                  {{ item.label }}
-                </el-option>
-              </el-select>
-            </div>
-          </div>
-          <div class="flex-1 flexBox flex-row flex-middle">
-            <div class="labelItem"><span class='redIcon'>*</span>费用：</div>
-            <div>
-              <el-input v-model='req.cost' type="number"/>
-            </div>
-          </div>
 
-        </div>
         <div class="item flexBox flex-row flex-middle pac-mb12x">
           <div class="flex-1 flexBox flex-row flex-middle">
             <div class="labelItem"><span class='redIcon'>*</span>车型：</div>

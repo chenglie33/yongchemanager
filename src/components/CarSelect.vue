@@ -1,5 +1,11 @@
 <template>
-  <div class='posA panelwrap flexBox flex-row'>
+  <div class='posA panelwrap flexBox flex-row carPanel' :class='{isexpend:isexpend}'>
+    <div v-if='isexpend'>
+      <i class="el-icon-caret-right buttonBig curP" @click="expend"></i>
+    </div>
+    <div v-else>
+      <i class="el-icon-caret-left buttonBig curP" @click="expend"></i>
+    </div>
     <div class='panel-left flexBox flex-col'>
       <div class='panel-btn flexBox flex-middle flex-center flex-col curP'  v-for='item in carTypeList' :key='item.id' @mouseleave="mouseleave" @mouseenter="mouseenter(item.id)" @click='clickBtn(item.id)' :class="{active: checkedBtn.includes(item.id)}">
         <img class='carimg' src='../assets/bigCar_g.png' v-if='item.id == 1 && hoverIndex !== 1&& !checkedBtn.includes(item.id)'/>
@@ -73,10 +79,14 @@ export default {
       shangwuCar: [],
       smallCar: [],
       selectCarArr: [],
-      selectIds: []
+      selectIds: [],
+      isexpend: true
     }
   },
   methods: {
+    expend () {
+      this.isexpend = !this.isexpend
+    },
     mouseenter (index) {
       this.hoverIndex = index
     },
@@ -154,7 +164,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .panelwrap{
-  width: 350px;
+  width: 400px;
 
   max-height: 600px;
 
@@ -223,5 +233,20 @@ export default {
     width: 20px;
     height: 20px;
   }
+
+}
+.buttonBig{
+    font-size: 50px;
+    color: rgba(4, 145, 255, 1);
+
+}
+
+.carPanel{
+  right:-350px;
+  transition: right .2s linear;
+}
+
+.carPanel.isexpend{
+  right: 0;
 }
 </style>
