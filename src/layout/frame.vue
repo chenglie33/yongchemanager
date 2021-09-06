@@ -34,13 +34,13 @@
             <div class='panel-item' @click="$router.push('/personmanage/weixin')">会员管理</div>
           </div>
         </div>
-        <div class='menuItem flexBox flex-col flex-middle flex-center' :class='{active:$route.meta.activeMenu==="configmanage"}' >
+        <div v-if='userInfo.userType!==2' class='menuItem flexBox flex-col flex-middle flex-center' :class='{active:$route.meta.activeMenu==="configmanage"}' >
           <img class='imgmenu' src='@/assets/pzgl.png' @click="$router.push('/configmanage')"/>
           配置管理
 <div class='dropDownPanel posA flexBox flex-col'>
             <div class='panel-item' @click="$router.push('/configmanage')">行政区</div>
-            <div class='panel-item' @click="$router.push('/configmanage/dizhibu')">地址簿</div>
-            <div class='panel-item' @click="$router.push('/configmanage/feiyong')">费用</div>
+            <div class='panel-item'  @click="$router.push('/configmanage/dizhibu')">地址簿</div>
+            <div class='panel-item'  @click="$router.push('/configmanage/feiyong')">费用</div>
             <div class='panel-item' @click="$router.push('/configmanage/gongsi')">公司</div>
           </div>
         </div>
