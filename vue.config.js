@@ -10,7 +10,8 @@ const publicConfig = {
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({
-        dayjs: 'dayjs'
+        dayjs: 'dayjs',
+        echarts: 'echarts'
       })
       // new BundleAnalyzerPlugin({analyzerPort: 8889})
     ],
@@ -45,7 +46,7 @@ const develop = {
     },
     proxy: {
       '/ht-api': {
-        target: 'http://192.168.31.107:8880/'
+        target: 'http://192.168.31.107:8880/' // http://15366728352.uicp.top/
         // pathRewrite: {
         //   '^/ht-api': ''
         // }

@@ -358,3 +358,27 @@ export function getOrderDetailsApi (data) {
     data
   })
 }
+
+export function getCostRateApi (data) {
+  return request({
+    url: '/ht-api/statistical/getCostRate',
+    method: 'post',
+    data
+  })
+}
+
+export function getUpDownStationStatisticalApi (data) {
+  return request({
+    url: '/ht-api/statistical/getUpDownStationStatistical',
+    method: 'post',
+    data
+  })
+}
+
+export function getMapStationApi (data) {
+  return request({
+    url: '/ht-api/statistical/getMapStation',
+    method: 'post',
+    data
+  })
+}
