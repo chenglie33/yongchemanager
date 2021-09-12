@@ -382,3 +382,11 @@ export function getMapStationApi (data) {
     data
   })
 }
+
+export function getUseCarTimeApi (data) {
+  return request({
+    url: '/ht-api/statistical/getUseCarTime',
+    method: 'post',
+    data
+  })
+}
