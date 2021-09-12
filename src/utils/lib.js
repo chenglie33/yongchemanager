@@ -3,6 +3,27 @@ import store from '../store'
 export function getTypeText (type, key) {
   let option = []
   switch (type) {
+    case 'carTypes':
+      option = [
+        {
+          value: 1,
+          label: '大巴'
+        },
+        {
+          value: 2,
+          label: '中巴'
+        },
+        {
+          value: 3,
+          label: '商务'
+        },
+        {
+          value: 4,
+          label: '小巴'
+        }
+
+      ]
+      break
     case 'carType':
       option = [
         {

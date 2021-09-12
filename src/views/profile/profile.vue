@@ -1,5 +1,8 @@
 <template>
   <div class="container-panel flexBox flex-row">
+    <orderDetail ref='orderDetail' :timerange='timerange'/>
+    <yongshi ref='yongshi' :timerange='timerange'/>
+    <shangxia ref='shangxia' :timerange='timerange' :shangxiatyoe='shangxiatyoe' :upDownType='upDownType'/>
     <div class="flexBox flex-col">
       <div class="leftPanel flex-1 pac-mb12x shadowWin flexBox flex-col">
         <el-date-picker
@@ -17,28 +20,35 @@
         </div>
       </div>
       <div class="leftPanel flex-1 pac-mb12x shadowWin flexBox flex-col">
-        <span>机场</span>
+        <div class="flexBox flex-row flex-center flex-middle"><div>机场</div><div class='flex-end flex-1 flexBox flex-center '> <el-button class='fR ' type="text"  icon="el-icon-s-operation" circle @click='showorder'></el-button></div></div>
         <numshangche class="flex-1" :jiChang="jiChang" ref="jichang" />
       </div>
       <div class="leftPanel flex-1 pac-mb12x shadowWin flexBox flex-col">
-        <span id="train">火车站</span>
+       <div class="flexBox flex-row flex-center flex-middle"><div>火车站</div><div class='flex-end flex-1 flexBox flex-center '> <el-button class='fR ' type="text"  icon="el-icon-s-operation" circle @click='showorder'></el-button></div></div>
         <numshangche class="flex-1" :jiChang="trainData" ref="train" />
       </div>
       <div class="leftPanel flex-1 pac-mb12x shadowWin flexBox flex-col">
-        <span id="baoche">包车</span>
+        <div class="flexBox flex-row flex-center flex-middle"><div>包车</div><div class='flex-end flex-1 flexBox flex-center '> <el-button class='fR ' type="text"  icon="el-icon-s-operation" circle @click='showorder'></el-button></div></div>
         <numshangche class="flex-1" :jiChang="baocheData" ref="baoche" />
       </div>
     </div>
     <div class="flexBox flex-col pac-pl12x flex-1" style="">
       <div class="flexBox flex-row flex-2 pac-mb12x">
         <div class="chartMap shadowWin flex-1" ref="chartMap"></div>
-        <div class="paiming pac-ml12x shadowWin"></div>
+        <div class="paiming pac-ml12x  flexBox flex-col" >
+          <div class='shadowWin aoll flexBox pac-mb12x flex-col'>
+            <div class='flex-end'><el-button class='fR ' type="text"  icon="el-icon-s-operation" circle @click='showorderyongshi'></el-button></div>
+            <div class='flex-1 flexBox flex-middle flex-center'>总计：{{allTime}}小时</div>
+          </div>
+          <div class='flex-1 shadowWin' ref='chartXX'></div>
+        </div>
       </div>
       <div class="flex-1 pac-pb12x">
         <div class="cartCity shadowWin pac-p12x flexBox flex-col">
           <div class="flexBox flex-row">
             <div>上车下车点统计</div>
             <div class="flex-1">
+              <el-button class='fR ' type="text"  icon="el-icon-s-operation" circle @click='showordershanxia'></el-button>
               <el-select v-model="shangxiatyoe" class="fR">
                 <el-option label="接机" :value="1"></el-option>
                 <el-option label="送机" :value="2"></el-option>
@@ -50,6 +60,7 @@
                 <el-option label="上车点" :value="1"></el-option>
                 <el-option label="下车点" :value="2"></el-option>
               </el-select>
+
             </div>
           </div>
           <div class="flex-1" ref="updown"></div>
@@ -63,13 +74,18 @@
 import {
   getCostRateApi,
   getUpDownStationStatisticalApi,
-  getMapStationApi
+  getMapStationApi,
+  getUseCarTimeApi
 } from '@/api/apilist'
 import numshangche from './components/numshangche.vue'
+import orderDetail from './components/orderDetail.vue'
+import shangxia from './components/shangxia.vue'
+import yongshi from './components/yongshi.vue'
 import china from './china.json'
+import { getTypeText } from '@/utils/lib'
 export default {
   name: 'peizhi',
-  components: { numshangche },
+  components: { numshangche, orderDetail, yongshi, shangxia },
   data () {
     const date = new Date()
     date.setMonth(date.getMonth() - 1)
@@ -80,9 +96,10 @@ export default {
       shangxiatyoe: 1,
       upDownType: 1,
       allCost: 0,
+      allTime: 0,
       timerange: [
-        dayjs(date).format('YYYY-MM-DD HH:mm:ss'),
-        dayjs(new Date()).format('YYYY-MM-DD HH:mm:ss')
+        dayjs(date).format('YYYY-MM-DD'),
+        dayjs(new Date()).format('YYYY-MM-DD')
       ]
     }
   },
@@ -98,6 +115,25 @@ export default {
     }
   },
   methods: {
+    showordershanxia () {
+      this.$refs.shangxia.show()
+    },
+    showorderyongshi () {
+      this.$refs.yongshi.show()
+    },
+    showorder () {
+      this.$refs.orderDetail.show()
+    },
+    getUseCarTime () {
+      return new Promise((res) => {
+        getUseCarTimeApi({
+          startTime: this.timerange[0] + ' 00:00:00',
+          endTime: this.timerange[1] + ' 00:00:00'
+        }).then(data => {
+          res(data.content)
+        })
+      })
+    },
     getMapStation () {
       return new Promise((resolve, reject) => {
         getMapStationApi({
@@ -369,7 +405,54 @@ export default {
         })
       })
     },
+    draw (data) {
+      const yAxis = []
+      const datax = []
+      this.allTime = 0
+      data.forEach(item => {
+        yAxis.push(getTypeText('carTypes', item.carType))
+        datax.push(item.useHour)
+        this.allTime += item.useHour
+      })
+      var myChart = echarts.init(this.$refs.chartXX)
+      const option = {
+
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          top: '2%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+          type: 'category',
+          data: yAxis
+        },
+        series: [
+          {
+
+            type: 'bar',
+            data: datax,
+            barMaxWidth: 20
+          }
+        ]
+      }
+      myChart.setOption(option)
+    },
     getAll () {
+      this.getUseCarTime().then(data => {
+        this.draw(data)
+      })
       this.getMapStation().then(data => {
         this.chartMap(data)
       })
@@ -440,5 +523,8 @@ export default {
 }
 .timeW {
   width: 280px;
+}
+.aoll{
+  height:30%
 }
 </style>

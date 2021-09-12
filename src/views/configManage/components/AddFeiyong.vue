@@ -103,9 +103,9 @@
                 placeholder="费用时段"
                 class="pac-pr20x"
               >
-                <el-option :value='1' label='整天'></el-option>
-                <el-option :value='2' label='上半天'></el-option>
-                <el-option :value='3' label='下半天'></el-option>
+                <el-option :value='1' label='整天(8:00～18:00)'></el-option>
+                <el-option :value='2' label='上半天(8:00～12:00)'></el-option>
+                <el-option :value='3' label='下半天(12:00～18:00)'></el-option>
                 <el-option :value='4' label='时间段'></el-option>
               </el-select>
             </div>

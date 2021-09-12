@@ -390,3 +390,27 @@ export function getUseCarTimeApi (data) {
     data
   })
 }
+
+export function statisticalApi (data) {
+  return request({
+    url: '/ht-api/statistical/getOrderPageList',
+    method: 'post',
+    data
+  })
+}
+
+export function useCarTimeListApi (data) {
+  return request({
+    url: '/ht-api/statistical/useCarTimeList',
+    method: 'post',
+    data
+  })
+}
+
+export function getUpDownStationStatisticalListApi (data) {
+  return request({
+    url: '/ht-api/statistical/getUpDownStationStatisticalList',
+    method: 'post',
+    data
+  })
+}
