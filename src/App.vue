@@ -5,6 +5,7 @@
   </div>
 </template>
 <script>
+
 import { getUserInfoApi } from '@/api/apilist'
 import { getCommonData } from '@/utils/lib'
 export default {
@@ -12,7 +13,7 @@ export default {
     getUserInfoApi().then(data => {
       this.$store.commit('SET_USERINFO', data.content)
     }).catch(() => {
-      this.$router.replace({ path: '/login/current' })
+      // this.$router.replace({ path: '/login/current' })
     })
     getCommonData()
   }

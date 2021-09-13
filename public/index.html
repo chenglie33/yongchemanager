@@ -3,7 +3,11 @@
   <head>
     
     <script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&&type=webgl&ak=3TMZUwQvlhpbCIXj8s2tzIdvWAap7naO"></script>
-    <script src="http://mapv.baidu.com/build/mapv.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.2.0/dist/echarts.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/getscript?v=3.0&ak=3TMZUwQvlhpbCIXj8s2tzIdvWAap7naO&services=&t=20200327103013"></script>
+    
+  <script type="text/javascript" src="./bmap/bmap.js"></script>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -17,6 +21,8 @@
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
+   
     <!-- built files will be auto injected -->
   </body>
+ 
 </html>

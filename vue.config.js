@@ -10,8 +10,7 @@ const publicConfig = {
   configureWebpack: {
     plugins: [
       new webpack.ProvidePlugin({
-        dayjs: 'dayjs',
-        echarts: 'echarts'
+        dayjs: 'dayjs'
       })
       // new BundleAnalyzerPlugin({analyzerPort: 8889})
     ],
