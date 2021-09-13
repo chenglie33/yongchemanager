@@ -81,7 +81,7 @@ import numshangche from './components/numshangche.vue'
 import orderDetail from './components/orderDetail.vue'
 import shangxia from './components/shangxia.vue'
 import yongshi from './components/yongshi.vue'
-import china from './china.json'
+
 import { getTypeText } from '@/utils/lib'
 export default {
   name: 'peizhi',
@@ -153,8 +153,7 @@ export default {
     chartMap (data) {
       // var map = new BMapGL.Map(this.$refs.chartMap)
       const chart = echarts.init(this.$refs.chartMap)
-      const name = 'bus'
-      echarts.registerMap(name, china)
+
       const lineData = []
       const scatterPoints = [
         { value: [120.594712, 31.305046], itemStyle: { color: '#ffc107' } }
@@ -231,67 +230,114 @@ export default {
           trigger: 'item',
           formatter: function (v) {
             if (v.data.value.length > 3) {
-              console.log(1)
               return v.data.value[3] + '：' + v.data.value[2].toString()
             }
             return null
           }
         },
-        backgroundColor: '#0F1C3C',
-        geo: {
 
-          show: true,
-          map: name,
-          center: [120.594712, 31.305046],
-          label: {
-            normal: {
-              show: false
-            },
-            emphasis: {
-              show: false
-            }
-          },
-          zoom: 8,
-          roam: true, // 是否开启平游或缩放
-          itemStyle: {
-            normal: {
-              areaColor: {
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: '#073684' // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: '#061E3D' // 100% 处的颜色
-                  }
-                ]
-              },
-              borderColor: '#2196f3',
-              borderWidth: 1
-            },
-            emphasis: {
-              areaColor: {
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: '#073684' // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: '#061E3D' // 100% 处的颜色
-                  }
-                ]
+        bmap: {
+          center: [104.114129, 37.550339],
+          zoom: 5,
+          roam: true,
+          mapStyle: {
+            styleJson: [{
+              featureType: 'water',
+              elementType: 'all',
+              stylers: {
+                color: '#d1d1d1'
               }
-            }
+            }, {
+              featureType: 'land',
+              elementType: 'all',
+              stylers: {
+                color: '#f3f3f3'
+              }
+            }, {
+              featureType: 'railway',
+              elementType: 'all',
+              stylers: {
+                visibility: 'off'
+              }
+            }, {
+              featureType: 'highway',
+              elementType: 'all',
+              stylers: {
+                color: '#fdfdfd'
+              }
+            }, {
+              featureType: 'highway',
+              elementType: 'labels',
+              stylers: {
+                visibility: 'off'
+              }
+            }, {
+              featureType: 'arterial',
+              elementType: 'geometry',
+              stylers: {
+                color: '#fefefe'
+              }
+            }, {
+              featureType: 'arterial',
+              elementType: 'geometry.fill',
+              stylers: {
+                color: '#fefefe'
+              }
+            }, {
+              featureType: 'poi',
+              elementType: 'all',
+              stylers: {
+                visibility: 'off'
+              }
+            }, {
+              featureType: 'green',
+              elementType: 'all',
+              stylers: {
+                visibility: 'off'
+              }
+            }, {
+              featureType: 'subway',
+              elementType: 'all',
+              stylers: {
+                visibility: 'off'
+              }
+            }, {
+              featureType: 'manmade',
+              elementType: 'all',
+              stylers: {
+                color: '#d1d1d1'
+              }
+            }, {
+              featureType: 'local',
+              elementType: 'all',
+              stylers: {
+                color: '#d1d1d1'
+              }
+            }, {
+              featureType: 'arterial',
+              elementType: 'labels',
+              stylers: {
+                visibility: 'off'
+              }
+            }, {
+              featureType: 'boundary',
+              elementType: 'all',
+              stylers: {
+                color: '#fefefe'
+              }
+            }, {
+              featureType: 'building',
+              elementType: 'all',
+              stylers: {
+                color: '#d1d1d1'
+              }
+            }, {
+              featureType: 'label',
+              elementType: 'labels.text.fill',
+              stylers: {
+                color: '#999999'
+              }
+            }]
           }
         },
 
@@ -300,6 +346,7 @@ export default {
             /// 地图线的动画效果
             type: 'lines',
             zlevel: 2,
+            coordinateSystem: 'bmap',
             effect: {
               show: true,
               period: 4, // 箭头指向速度，值越小速度越快
@@ -322,7 +369,7 @@ export default {
           {
             // 涟漪
             type: 'effectScatter',
-            coordinateSystem: 'geo',
+            coordinateSystem: 'bmap',
             showEffectOn: 'render',
             zlevel: 3,
 
