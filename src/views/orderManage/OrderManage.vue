@@ -76,6 +76,7 @@
         <el-table-column fixed="right" label="操作" width="200">
           <template slot-scope="scope">
             <el-button
+            v-if='scope.row.isPj == 2'
             @click='showd(scope.row)'
               type="text"
               >查看评价</el-button
