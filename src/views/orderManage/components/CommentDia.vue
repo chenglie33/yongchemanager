@@ -50,12 +50,8 @@
         <div class=''>
 
           <div class=''>
-          <el-rate
-            v-model="pjScore"
-            disabled
-            text-color="#ff9900"
-            >
-          </el-rate>
+            {{pjScore}}分
+
         </div>
         </div>
       </div>

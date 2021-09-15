@@ -414,3 +414,18 @@ export function getUpDownStationStatisticalListApi (data) {
     data
   })
 }
+
+export function getXcxPicApi (data) {
+  return request({
+    url: '/ht-api/config/getXcxPic',
+    method: 'get'
+  })
+}
+
+export function uploadXcxPicApi (data) {
+  return request({
+    url: '/ht-api/config/uploadXcxPic',
+    method: 'post',
+    data
+  })
+}

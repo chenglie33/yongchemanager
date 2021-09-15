@@ -178,6 +178,14 @@ const routes = [
           activeMenu: 'gongsi'
         },
         component: () => import(/* webpackChunkName: "gongsi" */ '@/views/configManage/company.vue')
+      },
+      {
+        path: '/configmanage/upload',
+        name: 'upload',
+        meta: {
+          activeMenu: 'upload'
+        },
+        component: () => import(/* webpackChunkName: "gongsi" */ '@/views/configManage/UploadPage.vue')
       }
     ]
   },

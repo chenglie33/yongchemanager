@@ -84,12 +84,13 @@ export default {
         setd.add(item.driverId)
         setc.add(item.carNum)
         req.push({
-          driverId: item.driver,
-          carNum: item.car,
+          driverId: item.driverId,
+          carNum: item.carNum,
           id: this.id,
           orderDetailsId: item.id
         })
       })
+      console.log(req)
       const orderLen = req.length
       if (setd.size !== orderLen || setc.size !== orderLen) {
         this.$message.warning('车辆或者司机可以重复配置')

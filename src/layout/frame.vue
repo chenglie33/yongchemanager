@@ -29,8 +29,8 @@
           <img class='imgmenu' src='@/assets/rygl.png' @click.stop="$router.push('/personmanage')"/>
           人员管理
             <div class='dropDownPanel posA flexBox flex-col'>
-            <div class='panel-item' @click="$router.push('/personmanage')">系统用户</div>
-            <div class='panel-item' @click="$router.push('/personmanage/driver')">司机</div>
+            <div class='panel-item' @click="$router.push('/personmanage')">用户管理</div>
+            <div class='panel-item' @click="$router.push('/personmanage/driver')">司机管理</div>
             <div class='panel-item' @click="$router.push('/personmanage/weixin')">会员管理</div>
           </div>
         </div>
@@ -38,10 +38,11 @@
           <img class='imgmenu' src='@/assets/pzgl.png' @click="$router.push('/configmanage')"/>
           配置管理
 <div class='dropDownPanel posA flexBox flex-col'>
-            <div class='panel-item' @click="$router.push('/configmanage')">行政区</div>
-            <div class='panel-item'  @click="$router.push('/configmanage/dizhibu')">地址簿</div>
-            <div class='panel-item'  @click="$router.push('/configmanage/feiyong')">费用</div>
-            <div class='panel-item' @click="$router.push('/configmanage/gongsi')">公司</div>
+            <div class='panel-item' @click="$router.push('/configmanage')">行政区划</div>
+            <div class='panel-item'  @click="$router.push('/configmanage/dizhibu')">站点配置</div>
+            <div class='panel-item'  @click="$router.push('/configmanage/feiyong')">计费明细</div>
+            <div class='panel-item' @click="$router.push('/configmanage/gongsi')">企业管理</div>
+            <div class='panel-item' @click="$router.push('/configmanage/upload')">首页轮播图</div>
           </div>
         </div>
         <div class='menuItem flexBox flex-col flex-middle flex-center'>
