@@ -130,7 +130,7 @@ export default {
           label: '接火车'
         }, {
           value: 4,
-          label: '送货车'
+          label: '送火车'
         }]
         this.req.configType = 3
       } else {

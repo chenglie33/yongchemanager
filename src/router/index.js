@@ -5,11 +5,11 @@ import Frame from '@/layout/frame.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'tes',
-    component: () => import(/* webpackChunkName: "login" */ '@/views/Test.vue')
-  },
+  // {
+  //   path: '/',
+  //   name: 'tes',
+  //   component: () => import(/* webpackChunkName: "login" */ '@/views/Test.vue')
+  // },
   {
     path: '/login',
     name: 'login',
@@ -186,6 +186,23 @@ const routes = [
           activeMenu: 'upload'
         },
         component: () => import(/* webpackChunkName: "gongsi" */ '@/views/configManage/UploadPage.vue')
+      }
+    ]
+  },
+  {
+    path: '/pc',
+    name: 'pc',
+    component: Frame,
+    redirect: '/pc',
+    children: [
+      {
+        path: '/',
+        name: 'pc',
+        activeMenu: 'pc',
+        meta: {
+          activeMenu: 'pc'
+        },
+        component: () => import('@/views/pc/pc.vue')
       }
     ]
   },

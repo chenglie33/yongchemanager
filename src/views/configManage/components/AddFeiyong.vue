@@ -241,7 +241,7 @@ export default {
         if (v === 1 || v === 3) {
           this.addressList1 = data.content.map(item => {
             return {
-              key: item.areaCode,
+              key: item.id,
               value: item.airportName
             }
           })
@@ -250,7 +250,7 @@ export default {
           this.addressList1 = this.addressList
           this.addressList2 = data.content.map(item => {
             return {
-              key: item.areaCode,
+              key: item.id,
               value: item.airportName
             }
           })
