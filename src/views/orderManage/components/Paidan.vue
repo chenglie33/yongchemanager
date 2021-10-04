@@ -90,7 +90,6 @@ export default {
           orderDetailsId: item.id
         })
       })
-      console.log(req)
       const orderLen = req.length
       if (setd.size !== orderLen || setc.size !== orderLen) {
         this.$message.warning('车辆或者司机可以重复配置')
@@ -110,9 +109,15 @@ export default {
       })
     },
     getDriverList () {
-      getDriverListApi({ orderStatus: 0 }).then(data => {
-        this.driverList = data.content
-      })
+      if (this.isDetail) {
+        getDriverListApi({}).then(data => {
+          this.driverList = data.content
+        })
+      } else {
+        getDriverListApi({ orderStatus: 0 }).then(data => {
+          this.driverList = data.content
+        })
+      }
     },
     getCarList () {
       getCarListApi({ orderStatus: 0 }).then(data => {

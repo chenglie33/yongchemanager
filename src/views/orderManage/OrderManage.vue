@@ -56,8 +56,8 @@
              </div>
            </template>
         </el-table-column>
-        <el-table-column prop="driverName" label="司机名称" width="120">
-        </el-table-column>
+        <!-- <el-table-column prop="driverName" label="司机名称" width="120">
+        </el-table-column> -->
         <el-table-column fixed prop="carNum" label="车牌号" width="150">
         </el-table-column>
         <el-table-column prop="startTime" label="接送时间" width="150">

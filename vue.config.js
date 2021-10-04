@@ -45,7 +45,7 @@ const develop = {
     },
     proxy: {
       '/ht-api': {
-        target: 'http://192.168.31.107:8880/' // http://15366728352.uicp.top/
+        target: 'http://15366728352.uicp.top/' // http://15366728352.uicp.top/
         // pathRewrite: {
         //   '^/ht-api': ''
         // }

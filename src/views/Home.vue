@@ -78,6 +78,7 @@ export default {
       this.carRealDetails(this.carNum)
     },
     carRealDetails (carNum) {
+      this.carNumlist = carNum
       carRealDetailsApi({ carNum }).then(data => {
         const allpoint = []
         data.content.forEach(item => {

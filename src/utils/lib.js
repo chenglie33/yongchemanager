@@ -259,7 +259,7 @@ export async function getCommonData () {
   await getOrderStatusApi().then(data => {
     store.commit('SET_CommonOrder', data.content)
   })
-  await getDriverListApi().then(data => {
+  await getDriverListApi({}).then(data => {
     store.commit('SET_CommonDriver', data.content)
   })
   await getCompanyListApi().then(data => {

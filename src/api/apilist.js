@@ -63,10 +63,11 @@ export function getCompanyListApi () {
     method: 'get'
   })
 }
-export function getDriverListApi () {
+export function getDriverListApi (data) {
   return request({
     url: '/ht-api/common/getDriverList',
-    method: 'post'
+    method: 'post',
+    data
   })
 }
 export function getOrderStatusApi () {

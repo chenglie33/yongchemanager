@@ -80,7 +80,8 @@ export default {
       smallCar: [],
       selectCarArr: [],
       selectIds: [],
-      isexpend: true
+      isexpend: true,
+      setTime: null
     }
   },
   methods: {
@@ -152,12 +153,17 @@ export default {
   },
   mounted () {
     this.getcartype()
-    console.log(this.$route.params.data)
+
     if (this.$route.params.data) {
       // this.selectIds.push(this.$route.params.data.id)
       // this.selectCarArr.push(this.$route.params.data)
       this.$emit('selectChangef', this.$route.params.data)
     }
+    this.setTime = setInterval(() => {
+      if (this.selectCarArr.length > 0) {
+        this.$emit('selectChange', this.selectCarArr)
+      }
+    }, 2000)
     // this.selectIds.push()
   }
 }
